@@ -6,11 +6,11 @@
 |------|------|
 | when-rlhf-fails-quietly | Silent failures diagnosed |
 | agentic-misuse-benchmark | Threats benchmarked |
-| agentic-safeguards-simulator | Safeguards designed |
-| safeguards-stress-tests | Attacks automated |
-| scalable-safeguards-eval-pipeline | Scaled eval |
-| model-safety-regression-suite | Release gated |
-| agentic-safety-incident-lab | Incidents closed-looped |
+| safety-harness/simulator | Safeguards designed |
+| safety-harness/stress-testing | Attacks automated |
+| safety-harness/release-gate | Scaled eval |
+| safety-harness/regression-suite | Release gated |
+| safety-harness/incident-lab | Incidents closed-looped |
 | safety-memos + whitepaper | Research communicated |
 
 ## Key Claim

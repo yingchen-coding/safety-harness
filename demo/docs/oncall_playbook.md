@@ -33,11 +33,11 @@ This runbook defines how to respond to safety incidents in production agentic sy
 
 ## Root Cause Workflow
 
-- Replay incident via `agentic-safety-incident-lab/replay.py`
+- Replay incident via `safety-harness/incident-lab/replay.py`
 - Attribute root cause using `root_cause.py`
 - Estimate blast radius using `blast_radius.py`
 - Generate regression tests with `generate_regression.py`
-- Integrate tests into `model-safety-regression-suite`
+- Integrate tests into `safety-harness/regression-suite`
 
 ## Mitigation Options
 

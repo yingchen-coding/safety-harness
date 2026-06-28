@@ -18,7 +18,7 @@ This document eliminates ambiguity about who decides.
 
 ## The One Rule
 
-> **Only ⑥ model-safety-regression-suite outputs release verdicts.**
+> **Only ⑥ safety-harness/regression-suite outputs release verdicts.**
 
 All other repositories produce **signals**, not **decisions**.
 
@@ -47,12 +47,12 @@ Signals (from ①②③④⑤⑦) ──→ ⑥ Regression Suite ──→ Verdi
 |------|-------------|----------------|
 | ① when-rlhf-fails-quietly | Failure taxonomy, causal analysis | Any verdict |
 | ② agentic-misuse-benchmark | Detection scores, benchmark results | Any verdict |
-| ③ agentic-safeguards-simulator | Safeguard signals, bypass analysis | Any verdict |
-| ④ safeguards-stress-tests | Erosion data, stress results | Any verdict |
-| ⑤ scalable-safeguards-eval-pipeline | Metrics, drift alerts | Any verdict |
-| ⑥ model-safety-regression-suite | **OK / WARN / BLOCK** | N/A |
-| ⑦ agentic-safety-incident-lab | RCA, promoted regressions | Any verdict |
-| ⑧ agentic-safety-demo | Demo status | Any verdict |
+| ③ safety-harness/simulator | Safeguard signals, bypass analysis | Any verdict |
+| ④ safety-harness/stress-testing | Erosion data, stress results | Any verdict |
+| ⑤ safety-harness/release-gate | Metrics, drift alerts | Any verdict |
+| ⑥ safety-harness/regression-suite | **OK / WARN / BLOCK** | N/A |
+| ⑦ safety-harness/incident-lab | RCA, promoted regressions | Any verdict |
+| ⑧ safety-harness/demo | Demo status | Any verdict |
 
 ---
 
@@ -63,7 +63,7 @@ Signals (from ①②③④⑤⑦) ──→ ⑥ Regression Suite ──→ Verdi
 ```yaml
 # Example signal from ⑤ eval-pipeline
 signal:
-  source: scalable-safeguards-eval-pipeline
+  source: safety-harness/release-gate
   type: drift_alert
   metric: failure_rate
   value: 0.11
@@ -78,7 +78,7 @@ signal:
 ```yaml
 # Example verdict from ⑥ regression-suite
 verdict:
-  source: model-safety-regression-suite
+  source: safety-harness/regression-suite
   decision: WARN
   reasons:
     - "failure_rate 11% within WARN band (8-12%)"

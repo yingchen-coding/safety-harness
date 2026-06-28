@@ -162,7 +162,7 @@ Identifies which attack strategies are most effective.
 - LLM-powered attack mutation
 - Adaptive attack selection based on model responses
 - Cross-model vulnerability transfer analysis
-- Integration with agentic-safeguards-simulator
+- Integration with safety-harness/simulator
 
 ## Relationship to Other Projects
 
@@ -175,11 +175,11 @@ agentic-misuse-benchmark
         │
         │ Evaluating DETECTION of failures
         ▼
-safeguards-stress-tests ← YOU ARE HERE
+safety-harness/stress-testing ← YOU ARE HERE
         │
         │ Proactively FINDING failures
         ▼
-agentic-safeguards-simulator
+safety-harness/simulator
         │
         │ PREVENTING failures in deployment
         ▼

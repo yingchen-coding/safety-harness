@@ -189,6 +189,6 @@ The closed loop has higher upfront investment but dramatically lower incident co
 ## Recommended Reading
 
 - [when-rlhf-fails-quietly](https://github.com/yingchen-coding/when-rlhf-fails-quietly): Why RLHF alone fails
-- [safeguards-stress-tests](https://github.com/yingchen-coding/safeguards-stress-tests): How to discover slow-burn attacks
-- [model-safety-regression-suite](https://github.com/yingchen-coding/model-safety-regression-suite): How longitudinal tracking works
-- [agentic-safety-incident-lab](https://github.com/yingchen-coding/agentic-safety-incident-lab): How failures become permanent gates
+- [safety-harness/stress-testing](https://github.com/yingchen-coding/safety-harness/tree/main/stress-testing): How to discover slow-burn attacks
+- [safety-harness/regression-suite](https://github.com/yingchen-coding/safety-harness/tree/main/regression-suite): How longitudinal tracking works
+- [safety-harness/incident-lab](https://github.com/yingchen-coding/safety-harness/tree/main/incident-lab): How failures become permanent gates

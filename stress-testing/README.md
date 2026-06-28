@@ -1,4 +1,4 @@
-> **Portfolio**: [Safety Memo](https://yingchen-coding.github.io/safety-memos/) · [when-rlhf-fails-quietly](https://github.com/yingchen-coding/when-rlhf-fails-quietly) · [agentic-misuse-benchmark](https://github.com/yingchen-coding/agentic-misuse-benchmark) · [agentic-safeguards-simulator](https://github.com/yingchen-coding/agentic-safeguards-simulator) · [safeguards-stress-tests](https://github.com/yingchen-coding/safeguards-stress-tests) · [scalable-safeguards-eval-pipeline](https://github.com/yingchen-coding/scalable-safeguards-eval-pipeline) · [model-safety-regression-suite](https://github.com/yingchen-coding/model-safety-regression-suite) · [agentic-safety-incident-lab](https://github.com/yingchen-coding/agentic-safety-incident-lab)
+> **Portfolio**: [Safety Memo](https://yingchen-coding.github.io/safety-memos/) · [when-rlhf-fails-quietly](https://github.com/yingchen-coding/when-rlhf-fails-quietly) · [agentic-misuse-benchmark](https://github.com/yingchen-coding/agentic-misuse-benchmark) · [safety-harness/simulator](https://github.com/yingchen-coding/safety-harness/tree/main/simulator) · [safety-harness/stress-testing](https://github.com/yingchen-coding/safety-harness/tree/main/stress-testing) · [safety-harness/release-gate](https://github.com/yingchen-coding/safety-harness/tree/main/release-gate) · [safety-harness/regression-suite](https://github.com/yingchen-coding/safety-harness/tree/main/regression-suite) · [safety-harness/incident-lab](https://github.com/yingchen-coding/safety-harness/tree/main/incident-lab)
 
 # Safeguards Stress Tests
 
@@ -16,14 +16,14 @@
 - Statistical power analysis for coverage budgeting
 
 **This repo explicitly does NOT:**
-- ❌ Implement safeguard mechanisms → [agentic-safeguards-simulator](https://github.com/yingchen-coding/agentic-safeguards-simulator)
+- ❌ Implement safeguard mechanisms → [safety-harness/simulator](https://github.com/yingchen-coding/safety-harness/tree/main/simulator)
 - ❌ Define attack taxonomies or benchmarks → [agentic-misuse-benchmark](https://github.com/yingchen-coding/agentic-misuse-benchmark)
-- ❌ Orchestrate production evaluation → [scalable-safeguards-eval-pipeline](https://github.com/yingchen-coding/scalable-safeguards-eval-pipeline)
-- ❌ Make release decisions → [model-safety-regression-suite](https://github.com/yingchen-coding/model-safety-regression-suite)
+- ❌ Orchestrate production evaluation → [safety-harness/release-gate](https://github.com/yingchen-coding/safety-harness/tree/main/release-gate)
+- ❌ Make release decisions → [safety-harness/regression-suite](https://github.com/yingchen-coding/safety-harness/tree/main/regression-suite)
 
 > **Rule of thumb**: This repo answers "how long until it breaks?" not "how do we fix it?"
 
-> **Boundary Statement**: Stress test results reflect **worst-case adversarial dynamics**, not population risk estimates. They **must not be used alone to block or approve releases**. Final authority lives in [model-safety-regression-suite](https://github.com/yingchen-coding/model-safety-regression-suite).
+> **Boundary Statement**: Stress test results reflect **worst-case adversarial dynamics**, not population risk estimates. They **must not be used alone to block or approve releases**. Final authority lives in [safety-harness/regression-suite](https://github.com/yingchen-coding/safety-harness/tree/main/regression-suite).
 
 ---
 
@@ -38,7 +38,7 @@ TARGET UNDER TEST
  │
  └── Agent System
       ├── Without safeguards (baseline)
-      └── With safeguards (from agentic-safeguards-simulator)
+      └── With safeguards (from safety-harness/simulator)
 ```
 
 **Key value proposition**: Validates whether safeguards from repo ③ actually resist adaptive attacks—without implementing any safeguard logic itself.
@@ -368,15 +368,15 @@ Plots saved to: results/plots/
 ## Output Contract for Downstream Repos
 
 Stress test results are exported in a machine-readable format for consumption by:
-- **scalable-safeguards-eval-pipeline** — Regression detection
-- **model-safety-regression-suite** — Release gating
+- **safety-harness/release-gate** — Regression detection
+- **safety-harness/regression-suite** — Release gating
 
 ### Schema Example
 
 ```json
 {
   "system_under_test": {
-    "name": "agentic-safeguards-simulator",
+    "name": "safety-harness/simulator",
     "version": "0.3.0",
     "target_type": "agent_with_safeguards"
   },
@@ -421,7 +421,7 @@ See [`config/output_schema.json`](config/output_schema.json) for full JSON Schem
 ## Repository Structure
 
 ```
-safeguards-stress-tests/
+safety-harness/stress-testing/
 ├── run_stress_tests.py      # Main entry point
 ├── rollout.py               # N-turn conversation engine
 ├── export_failures.py       # Export for downstream repos
@@ -482,7 +482,7 @@ This project complements:
 |---------|-------|---------------------|
 | when-rlhf-fails-quietly | Why alignment fails | Provides attack vectors |
 | agentic-misuse-benchmark | Detection evaluation | Provides test scenarios |
-| agentic-safeguards-simulator | Mitigation design | Validates safeguard effectiveness |
+| safety-harness/simulator | Mitigation design | Validates safeguard effectiveness |
 | **This project** | Proactive stress testing | Surfaces vulnerabilities before deployment |
 
 ---
@@ -514,9 +514,9 @@ This repo is the **adversary**. It does NOT:
 |---------------|------------------|----------|
 | RLHF failure analysis | when-rlhf-fails-quietly | ❌ |
 | Benchmark task sets | agentic-misuse-benchmark | ❌ |
-| Safeguard implementation | agentic-safeguards-simulator | ❌ |
-| Release gating | model-safety-regression-suite | ❌ |
-| Incident response | agentic-safety-incident-lab | ❌ |
+| Safeguard implementation | safety-harness/simulator | ❌ |
+| Release gating | safety-harness/regression-suite | ❌ |
+| Incident response | safety-harness/incident-lab | ❌ |
 
 **Single responsibility**: Break defenses. Quantify how long they hold. Export failures for downstream hardening.
 

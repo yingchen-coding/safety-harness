@@ -1,4 +1,4 @@
-> **Portfolio**: [Safety Memo](https://yingchen-coding.github.io/safety-memos/) · [when-rlhf-fails-quietly](https://github.com/yingchen-coding/when-rlhf-fails-quietly) · [agentic-misuse-benchmark](https://github.com/yingchen-coding/agentic-misuse-benchmark) · [agentic-safeguards-simulator](https://github.com/yingchen-coding/agentic-safeguards-simulator) · [safeguards-stress-tests](https://github.com/yingchen-coding/safeguards-stress-tests) · [scalable-safeguards-eval-pipeline](https://github.com/yingchen-coding/scalable-safeguards-eval-pipeline) · [model-safety-regression-suite](https://github.com/yingchen-coding/model-safety-regression-suite) · [agentic-safety-incident-lab](https://github.com/yingchen-coding/agentic-safety-incident-lab)
+> **Portfolio**: [Safety Memo](https://yingchen-coding.github.io/safety-memos/) · [when-rlhf-fails-quietly](https://github.com/yingchen-coding/when-rlhf-fails-quietly) · [agentic-misuse-benchmark](https://github.com/yingchen-coding/agentic-misuse-benchmark) · [safety-harness/simulator](https://github.com/yingchen-coding/safety-harness/tree/main/simulator) · [safety-harness/stress-testing](https://github.com/yingchen-coding/safety-harness/tree/main/stress-testing) · [safety-harness/release-gate](https://github.com/yingchen-coding/safety-harness/tree/main/release-gate) · [safety-harness/regression-suite](https://github.com/yingchen-coding/safety-harness/tree/main/regression-suite) · [safety-harness/incident-lab](https://github.com/yingchen-coding/safety-harness/tree/main/incident-lab)
 
 # Agentic Safety Demo
 
@@ -43,7 +43,7 @@ After running the demo, inspect:
 | C5 | Continuous Safety Improvement | Medium |
 | C6 | Transparency & Traceability | Medium |
 
-See [model-safety-regression-suite/config/constitution_v2.yaml](../model-safety-regression-suite/config/constitution_v2.yaml) for the executable constitution.
+See [regression-suite/config/constitution_v2.yaml](../regression-suite/config/constitution_v2.yaml) for the executable constitution.
 
 ---
 
@@ -175,8 +175,8 @@ This demo walks through the complete loop in 5 minutes.
 ### Step 0: Setup
 
 ```bash
-git clone https://github.com/yingchen-coding/agentic-safety-demo
-cd agentic-safety-demo
+git clone https://github.com/yingchen-coding/safety-harness
+cd safety-harness/demo
 pip install -r requirements.txt
 ```
 
@@ -333,7 +333,7 @@ Demo completed in 47s.
 ## Repository Structure
 
 ```
-agentic-safety-demo/
+safety-harness/demo/
 ├── scripts/
 │   ├── step1_run_stress_tests.py    # Discovery
 │   ├── step2_generate_regression.py # Conversion
@@ -522,9 +522,9 @@ The System Constitution is the explicit contract that eliminates ambiguity about
 
 | Repository | Role in System |
 |------------|----------------|
-| [safeguards-stress-tests](https://github.com/yingchen-coding/safeguards-stress-tests) | Step 1: Discovery |
-| [agentic-safety-incident-lab](https://github.com/yingchen-coding/agentic-safety-incident-lab) | Steps 2 & 4: Conversion & Learning |
-| [model-safety-regression-suite](https://github.com/yingchen-coding/model-safety-regression-suite) | Step 3: Gating |
+| [safety-harness/stress-testing](https://github.com/yingchen-coding/safety-harness/tree/main/stress-testing) | Step 1: Discovery |
+| [safety-harness/incident-lab](https://github.com/yingchen-coding/safety-harness/tree/main/incident-lab) | Steps 2 & 4: Conversion & Learning |
+| [safety-harness/regression-suite](https://github.com/yingchen-coding/safety-harness/tree/main/regression-suite) | Step 3: Gating |
 
 ---
 

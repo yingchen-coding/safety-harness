@@ -1,4 +1,4 @@
-> **Portfolio**: [Safety Memo](https://yingchen-coding.github.io/safety-memos/) · [when-rlhf-fails-quietly](https://github.com/yingchen-coding/when-rlhf-fails-quietly) · [agentic-misuse-benchmark](https://github.com/yingchen-coding/agentic-misuse-benchmark) · [agentic-safeguards-simulator](https://github.com/yingchen-coding/agentic-safeguards-simulator) · [safeguards-stress-tests](https://github.com/yingchen-coding/safeguards-stress-tests) · [scalable-safeguards-eval-pipeline](https://github.com/yingchen-coding/scalable-safeguards-eval-pipeline) · [model-safety-regression-suite](https://github.com/yingchen-coding/model-safety-regression-suite) · [agentic-safety-incident-lab](https://github.com/yingchen-coding/agentic-safety-incident-lab)
+> **Portfolio**: [Safety Memo](https://yingchen-coding.github.io/safety-memos/) · [when-rlhf-fails-quietly](https://github.com/yingchen-coding/when-rlhf-fails-quietly) · [agentic-misuse-benchmark](https://github.com/yingchen-coding/agentic-misuse-benchmark) · [safety-harness/simulator](https://github.com/yingchen-coding/safety-harness/tree/main/simulator) · [safety-harness/stress-testing](https://github.com/yingchen-coding/safety-harness/tree/main/stress-testing) · [safety-harness/release-gate](https://github.com/yingchen-coding/safety-harness/tree/main/release-gate) · [safety-harness/regression-suite](https://github.com/yingchen-coding/safety-harness/tree/main/regression-suite) · [safety-harness/incident-lab](https://github.com/yingchen-coding/safety-harness/tree/main/incident-lab)
 
 # Agentic Safeguards Simulator
 
@@ -27,15 +27,15 @@ This repo is the **single source of truth** for:
 This repo **explicitly does NOT**:
 
 - ❌ Define attack taxonomies or evaluation benchmarks → [agentic-misuse-benchmark](https://github.com/yingchen-coding/agentic-misuse-benchmark)
-- ❌ Perform large-scale stress testing or fuzzing → [safeguards-stress-tests](https://github.com/yingchen-coding/safeguards-stress-tests)
-- ❌ Orchestrate production evaluation pipelines → [scalable-safeguards-eval-pipeline](https://github.com/yingchen-coding/scalable-safeguards-eval-pipeline)
-- ❌ Decide release readiness (OK / WARN / BLOCK) → [model-safety-regression-suite](https://github.com/yingchen-coding/model-safety-regression-suite)
-- ❌ Perform post-deployment incident RCA or blast-radius analysis → [agentic-safety-incident-lab](https://github.com/yingchen-coding/agentic-safety-incident-lab)
-- ❌ Act as an integration or demo entrypoint → [agentic-safety-demo](https://github.com/yingchen-coding/agentic-safety-demo)
+- ❌ Perform large-scale stress testing or fuzzing → [safety-harness/stress-testing](https://github.com/yingchen-coding/safety-harness/tree/main/stress-testing)
+- ❌ Orchestrate production evaluation pipelines → [safety-harness/release-gate](https://github.com/yingchen-coding/safety-harness/tree/main/release-gate)
+- ❌ Decide release readiness (OK / WARN / BLOCK) → [safety-harness/regression-suite](https://github.com/yingchen-coding/safety-harness/tree/main/regression-suite)
+- ❌ Perform post-deployment incident RCA or blast-radius analysis → [safety-harness/incident-lab](https://github.com/yingchen-coding/safety-harness/tree/main/incident-lab)
+- ❌ Act as an integration or demo entrypoint → [safety-harness/demo](https://github.com/yingchen-coding/safety-harness/tree/main/demo)
 
 > **Rule of thumb**: If the question is "should we ship this model?", this repo must not answer it.
 
-> **Boundary Statement**: This repository simulates safeguard placement and escalation logic. It **does NOT define final safety policy thresholds** or approve production deployment. Safeguards produce signals, not decisions. Final authority lives in [model-safety-regression-suite](https://github.com/yingchen-coding/model-safety-regression-suite).
+> **Boundary Statement**: This repository simulates safeguard placement and escalation logic. It **does NOT define final safety policy thresholds** or approve production deployment. Safeguards produce signals, not decisions. Final authority lives in [safety-harness/regression-suite](https://github.com/yingchen-coding/safety-harness/tree/main/regression-suite).
 
 ---
 
@@ -302,7 +302,7 @@ python run_agent.py --task "..." --sensitivity high
 ## Repository Structure
 
 ```
-agentic-safeguards-simulator/
+safety-harness/simulator/
 ├── run_agent.py              # Main entry point
 ├── agent/
 │   ├── planner.py           # Action planning

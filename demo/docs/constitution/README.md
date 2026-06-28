@@ -34,9 +34,9 @@ This constitution eliminates ambiguity by making implicit contracts explicit.
 
 ### Principle 1: Single Point of Authority
 Every decision type has exactly ONE authoritative source:
-- Release decisions: **⑥ model-safety-regression-suite**
+- Release decisions: **⑥ safety-harness/regression-suite**
 - Metric definitions: **This constitution**
-- Incident classification: **⑦ agentic-safety-incident-lab**
+- Incident classification: **⑦ safety-harness/incident-lab**
 
 ### Principle 2: Explicit Over Implicit
 If it's not written here, it's not agreed upon. Verbal agreements and "common knowledge" are not contracts.
@@ -73,7 +73,7 @@ Is metric defined in metric_definitions.md?
 ### "Who decides if we ship?"
 
 ```
-Only ⑥ model-safety-regression-suite outputs OK/WARN/BLOCK
+Only ⑥ safety-harness/regression-suite outputs OK/WARN/BLOCK
 All other repos produce SIGNALS, not DECISIONS
 ```
 

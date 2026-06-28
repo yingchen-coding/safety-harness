@@ -22,7 +22,7 @@ This is not legal advice. It documents how technical controls support compliance
 |------------------------|------------------|---------------------|
 | EU AI Act: Risk Management System | Threat model + misuse benchmarks | docs/threat_model.md |
 | EU AI Act: Data & Monitoring | Production traffic replay + drift detection | traffic adapter + drift reports |
-| EU AI Act: Post-Market Monitoring | Incident -> regression feedback loop | agentic-safety-incident-lab |
+| EU AI Act: Post-Market Monitoring | Incident -> regression feedback loop | safety-harness/incident-lab |
 | EU AI Act: Human Oversight | Human override + escalation policy | governance.md |
 | EU AI Act: Logging & Traceability | Versioned evals + CI logs | regression reports |
 | NIST RMF: Govern | Safety owner + sign-off workflow | governance.md |

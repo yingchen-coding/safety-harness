@@ -166,13 +166,13 @@ This document describes the architecture decisions and tradeoffs in building a p
 │  agentic-misuse-benchmark    → Defining test scenarios       │
 │           │                                                  │
 │           ▼                                                  │
-│  safeguards-stress-tests     → Red-teaming attacks           │
+│  safety-harness/stress-testing     → Red-teaming attacks           │
 │           │                                                  │
 │           ▼                                                  │
 │  THIS PIPELINE               → Running at scale              │
 │           │                                                  │
 │           ▼                                                  │
-│  agentic-safeguards-simulator → Mitigation strategies        │
+│  safety-harness/simulator → Mitigation strategies        │
 │                                                              │
 └─────────────────────────────────────────────────────────────┘
 ```

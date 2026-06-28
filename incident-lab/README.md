@@ -1,4 +1,4 @@
-> **Portfolio**: [Safety Memo](https://yingchen-coding.github.io/safety-memos/) · [when-rlhf-fails-quietly](https://github.com/yingchen-coding/when-rlhf-fails-quietly) · [agentic-misuse-benchmark](https://github.com/yingchen-coding/agentic-misuse-benchmark) · [agentic-safeguards-simulator](https://github.com/yingchen-coding/agentic-safeguards-simulator) · [safeguards-stress-tests](https://github.com/yingchen-coding/safeguards-stress-tests) · [scalable-safeguards-eval-pipeline](https://github.com/yingchen-coding/scalable-safeguards-eval-pipeline) · [model-safety-regression-suite](https://github.com/yingchen-coding/model-safety-regression-suite) · [agentic-safety-incident-lab](https://github.com/yingchen-coding/agentic-safety-incident-lab)
+> **Portfolio**: [Safety Memo](https://yingchen-coding.github.io/safety-memos/) · [when-rlhf-fails-quietly](https://github.com/yingchen-coding/when-rlhf-fails-quietly) · [agentic-misuse-benchmark](https://github.com/yingchen-coding/agentic-misuse-benchmark) · [safety-harness/simulator](https://github.com/yingchen-coding/safety-harness/tree/main/simulator) · [safety-harness/stress-testing](https://github.com/yingchen-coding/safety-harness/tree/main/stress-testing) · [safety-harness/release-gate](https://github.com/yingchen-coding/safety-harness/tree/main/release-gate) · [safety-harness/regression-suite](https://github.com/yingchen-coding/safety-harness/tree/main/regression-suite) · [safety-harness/incident-lab](https://github.com/yingchen-coding/safety-harness/tree/main/incident-lab)
 
 # Agentic Safety Incident Lab
 
@@ -20,7 +20,7 @@ Post-deployment incident replay, root-cause analysis, and regression hardening f
 - ❌ Generate attack templates (stress-tests' job)
 - ❌ Implement safeguards (simulator's job)
 
-> **Boundary Statement**: Incident lab **informs future tests**, it **cannot change live policy directly**. RCA and regression promotion are recommendations. The release gate decides whether to accept promoted regressions. Final authority lives in [model-safety-regression-suite](https://github.com/yingchen-coding/model-safety-regression-suite).
+> **Boundary Statement**: Incident lab **informs future tests**, it **cannot change live policy directly**. RCA and regression promotion are recommendations. The release gate decides whether to accept promoted regressions. Final authority lives in [safety-harness/regression-suite](https://github.com/yingchen-coding/safety-harness/tree/main/regression-suite).
 
 ---
 
@@ -275,7 +275,7 @@ This distinguishes one-off bugs from systemic vulnerabilities.
       "coordinated_misuse/CM_04",
       "task_decomposition/TD_02"
     ],
-    "safeguards-stress-tests": [
+    "safety-harness/stress-testing": [
       "decomposition_bypass_v3",
       "roleplay_chain_v2"
     ],
@@ -381,7 +381,7 @@ Production Incident
 ## Repository Structure
 
 ```
-agentic-safety-incident-lab/
+safety-harness/incident-lab/
 ├── incidents/
 │   ├── INC_001.json           # Injection + tool misuse
 │   ├── INC_002.json           # Policy erosion
@@ -600,7 +600,7 @@ BLOCKING DEBT:
 
 **Integration with Release Gate:**
 
-The debt ledger is consumed by [model-safety-regression-suite](https://github.com/yingchen-coding/model-safety-regression-suite):
+The debt ledger is consumed by [safety-harness/regression-suite](https://github.com/yingchen-coding/safety-harness/tree/main/regression-suite):
 - Blocking debt entries prevent release (verdict: BLOCK)
 - Mitigated entries no longer block
 - Total debt amount affects gate threshold

@@ -33,7 +33,7 @@ Each repository serves exactly one layer in the safety lifecycle. Repositories c
 │  ┌─────────────────────────────────────────────────────────────────────┐   │
 │  │                        RELEASE GATING                                │   │
 │  │                                                                      │   │
-│  │  scalable-safeguards-eval-pipeline ◀──▶ model-safety-regression-suite│   │
+│  │  safety-harness/release-gate ◀──▶ safety-harness/regression-suite│   │
 │  │                                                                      │   │
 │  │  CI/CD Integration │ Regression Tests │ Version Comparison           │   │
 │  └─────────────────────────────────────────────────────────────────────┘   │
@@ -42,7 +42,7 @@ Each repository serves exactly one layer in the safety lifecycle. Repositories c
 │  ┌─────────────────────────────────────────────────────────────────────┐   │
 │  │                      INCIDENT LEARNING                               │   │
 │  │                                                                      │   │
-│  │  agentic-safety-incident-lab                                        │   │
+│  │  safety-harness/incident-lab                                        │   │
 │  │                                                                      │   │
 │  │  Replay │ Root Cause │ Blast Radius │ Regression Promotion           │   │
 │  └─────────────────────────────────────────────────────────────────────┘   │
@@ -51,7 +51,7 @@ Each repository serves exactly one layer in the safety lifecycle. Repositories c
 │  ┌─────────────────────────────────────────────────────────────────────┐   │
 │  │                        GOVERNANCE                                    │   │
 │  │                                                                      │   │
-│  │  agentic-safety-demo │ Safety Memos                                 │   │
+│  │  safety-harness/demo │ Safety Memos                                 │   │
 │  │                                                                      │   │
 │  │  Threat Models │ SLOs │ Playbooks │ Thought Leadership              │   │
 │  └─────────────────────────────────────────────────────────────────────┘   │
@@ -74,12 +74,12 @@ Each repository owns exactly one capability. Functionality that could belong to 
 |------------|-------|----------------------|------------------------|
 | **when-rlhf-fails-quietly** | Discovery | Define failure taxonomy & benchmark scenarios | CI/CD, infra, dashboards, runtime |
 | **agentic-misuse-benchmark** | Detection | Evaluate misuse detection accuracy | Mitigation, gating, incident analysis |
-| **agentic-safeguards-simulator** | Mitigation | Runtime safeguard hooks & policy enforcement | Evaluation, benchmarking, CI/CD |
-| **safeguards-stress-tests** | Validation | Adversarial stress testing & erosion curves | Gating decisions, regression suites |
-| **scalable-safeguards-eval-pipeline** | Release Gating | CI/CD orchestration & version comparison | Benchmark definition, runtime |
-| **model-safety-regression-suite** | Continuous Testing | Curated regression test collection | Running tests, infrastructure |
-| **agentic-safety-incident-lab** | Incident Learning | Post-hoc replay & root cause analysis | Real-time detection, evaluation |
-| **agentic-safety-demo** | Governance | Documentation templates & processes | Code, evaluation, runtime |
+| **safety-harness/simulator** | Mitigation | Runtime safeguard hooks & policy enforcement | Evaluation, benchmarking, CI/CD |
+| **safety-harness/stress-testing** | Validation | Adversarial stress testing & erosion curves | Gating decisions, regression suites |
+| **safety-harness/release-gate** | Release Gating | CI/CD orchestration & version comparison | Benchmark definition, runtime |
+| **safety-harness/regression-suite** | Continuous Testing | Curated regression test collection | Running tests, infrastructure |
+| **safety-harness/incident-lab** | Incident Learning | Post-hoc replay & root cause analysis | Real-time detection, evaluation |
+| **safety-harness/demo** | Governance | Documentation templates & processes | Code, evaluation, runtime |
 | **Safety Memos** | Communication | Technical writing & thought leadership | Implementation, experiments |
 
 ---
@@ -101,22 +101,22 @@ Repositories communicate via minimal, versioned schemas. No shared code, no shar
 │  agentic-misuse-benchmark                                                 │
 │  └── EXPORTS: detector_results.json (accuracy, confusion matrix)          │
 │                                                                           │
-│  agentic-safeguards-simulator                                             │
+│  safety-harness/simulator                                             │
 │  └── EXPORTS: safeguard_config.yaml (hooks, thresholds, policies)         │
 │  └── IMPORTS: trajectory_events.jsonl                                     │
 │                                                                           │
-│  safeguards-stress-tests                                                  │
+│  safety-harness/stress-testing                                                  │
 │  └── EXPORTS: erosion_curves.json, failure_cases.jsonl                    │
 │                                                                           │
-│  scalable-safeguards-eval-pipeline                                        │
+│  safety-harness/release-gate                                        │
 │  └── IMPORTS: benchmark_spec.json, safeguard_config.yaml                  │
 │  └── EXPORTS: gate_verdict.json (OK/WARN/BLOCK)                           │
 │                                                                           │
-│  model-safety-regression-suite                                            │
+│  safety-harness/regression-suite                                            │
 │  └── IMPORTS: failure_cases.jsonl (from stress-tests, incident-lab)       │
 │  └── EXPORTS: regression_manifest.json                                    │
 │                                                                           │
-│  agentic-safety-incident-lab                                              │
+│  safety-harness/incident-lab                                              │
 │  └── IMPORTS: production_logs.jsonl                                       │
 │  └── EXPORTS: incident_report.json, regression_case.json                  │
 │                                                                           │
@@ -144,7 +144,7 @@ benchmark_spec.json  detector_results  safeguard_config    erosion_curves
                            gate_verdict.json
                                     │
                                     ▼
-                         model-safety-regression-suite
+                         safety-harness/regression-suite
 ```
 
 ### Feedback Path: Production → Research
@@ -158,7 +158,7 @@ Production Incident ──▶ Incident Lab ──▶ Root Cause ──▶ Regres
          └────────────────────┴───────────────┴───────────────┘
                                     │
                                     ▼
-                         model-safety-regression-suite
+                         safety-harness/regression-suite
                                     │
                                     ▼
                     when-rlhf-fails-quietly (taxonomy update)
@@ -175,12 +175,12 @@ Production Incident ──▶ Incident Lab ──▶ Root Cause ──▶ Regres
 | Failure taxonomy definition | when-rlhf-fails-quietly | Define new failure modes elsewhere |
 | Scenario YAML format | when-rlhf-fails-quietly | Create competing formats |
 | Detection accuracy metrics | agentic-misuse-benchmark | Report detection metrics elsewhere |
-| Runtime policy enforcement | agentic-safeguards-simulator | Inline policy checks in other repos |
-| Erosion curve calculation | safeguards-stress-tests | Compute erosion in eval pipeline |
+| Runtime policy enforcement | safety-harness/simulator | Inline policy checks in other repos |
+| Erosion curve calculation | safety-harness/stress-testing | Compute erosion in eval pipeline |
 | CI/CD orchestration | scalable-eval-pipeline | Build CI in benchmark repos |
-| Regression test curation | model-safety-regression-suite | Store regression tests elsewhere |
-| Post-hoc incident analysis | agentic-safety-incident-lab | Add RCA to stress tests |
-| Governance templates | agentic-safety-demo | Add docs to code repos |
+| Regression test curation | safety-harness/regression-suite | Store regression tests elsewhere |
+| Post-hoc incident analysis | safety-harness/incident-lab | Add RCA to stress tests |
+| Governance templates | safety-harness/demo | Add docs to code repos |
 
 ### Boundary Violations to Avoid
 
@@ -189,15 +189,15 @@ Production Incident ──▶ Incident Lab ──▶ Root Cause ──▶ Regres
    → This belongs in scalable-eval-pipeline
 
 ❌ WRONG: agentic-misuse-benchmark includes safeguard hooks
-   → This belongs in agentic-safeguards-simulator
+   → This belongs in safety-harness/simulator
 
-❌ WRONG: safeguards-stress-tests makes release gating decisions
+❌ WRONG: safety-harness/stress-testing makes release gating decisions
    → This belongs in scalable-eval-pipeline
 
 ❌ WRONG: scalable-eval-pipeline defines new failure taxonomy
    → This belongs in when-rlhf-fails-quietly
 
-❌ WRONG: agentic-safety-incident-lab runs real-time detection
+❌ WRONG: safety-harness/incident-lab runs real-time detection
    → This is for post-hoc analysis only
 ```
 
@@ -234,8 +234,8 @@ when-rlhf-fails-quietly/
 | Producer Repo | Consumer Repo | Schema Version |
 |--------------|---------------|----------------|
 | when-rlhf-fails-quietly | scalable-eval-pipeline | benchmark_spec v1.x |
-| safeguards-stress-tests | model-safety-regression-suite | failure_case v1.x |
-| agentic-safety-incident-lab | model-safety-regression-suite | regression_case v1.x |
+| safety-harness/stress-testing | safety-harness/regression-suite | failure_case v1.x |
+| safety-harness/incident-lab | safety-harness/regression-suite | regression_case v1.x |
 
 ---
 

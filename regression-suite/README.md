@@ -1,4 +1,4 @@
-> **Portfolio**: [Safety Memo](https://yingchen-coding.github.io/safety-memos/) · [when-rlhf-fails-quietly](https://github.com/yingchen-coding/when-rlhf-fails-quietly) · [agentic-misuse-benchmark](https://github.com/yingchen-coding/agentic-misuse-benchmark) · [agentic-safeguards-simulator](https://github.com/yingchen-coding/agentic-safeguards-simulator) · [safeguards-stress-tests](https://github.com/yingchen-coding/safeguards-stress-tests) · [scalable-safeguards-eval-pipeline](https://github.com/yingchen-coding/scalable-safeguards-eval-pipeline) · [model-safety-regression-suite](https://github.com/yingchen-coding/model-safety-regression-suite) · [agentic-safety-incident-lab](https://github.com/yingchen-coding/agentic-safety-incident-lab)
+> **Portfolio**: [Safety Memo](https://yingchen-coding.github.io/safety-memos/) · [when-rlhf-fails-quietly](https://github.com/yingchen-coding/when-rlhf-fails-quietly) · [agentic-misuse-benchmark](https://github.com/yingchen-coding/agentic-misuse-benchmark) · [safety-harness/simulator](https://github.com/yingchen-coding/safety-harness/tree/main/simulator) · [safety-harness/stress-testing](https://github.com/yingchen-coding/safety-harness/tree/main/stress-testing) · [safety-harness/release-gate](https://github.com/yingchen-coding/safety-harness/tree/main/release-gate) · [safety-harness/regression-suite](https://github.com/yingchen-coding/safety-harness/tree/main/regression-suite) · [safety-harness/incident-lab](https://github.com/yingchen-coding/safety-harness/tree/main/incident-lab)
 
 # Model Safety Regression Suite
 
@@ -72,7 +72,7 @@ See [`scripts/check_exception_blast_radius.py`](scripts/check_exception_blast_ra
 A unified regression benchmark suite to detect safety degradations across model versions using multi-turn misuse evals, red-teaming stress tests, and trajectory-level safeguards metrics.
 
 **Boundary clarification:**
-- [scalable-safeguards-eval-pipeline](https://github.com/yingchen-coding/scalable-safeguards-eval-pipeline): "What is happening?" (observation)
+- [safety-harness/release-gate](https://github.com/yingchen-coding/safety-harness/tree/main/release-gate): "What is happening?" (observation)
 - **This repo**: "Can we ship this change safely?" (judgment)
 
 **This repo does NOT:**
@@ -237,12 +237,12 @@ The suite generates a comprehensive regression report:
 ### Red-Team Stress Tests (`redteam`)
 - Automated adversarial attack evaluation
 - Metrics: attack_success_rate, delayed_failure_rate, erosion_curve
-- Source: [safeguards-stress-tests](https://github.com/yingchen-coding/safeguards-stress-tests)
+- Source: [safety-harness/stress-testing](https://github.com/yingchen-coding/safety-harness/tree/main/stress-testing)
 
 ### Trajectory Monitoring (`trajectory`)
 - Policy erosion and drift detection
 - Metrics: policy_erosion_slope, avg_first_failure, drift_score
-- Source: [scalable-safeguards-eval-pipeline](https://github.com/yingchen-coding/scalable-safeguards-eval-pipeline) · [model-safety-regression-suite](https://github.com/yingchen-coding/model-safety-regression-suite) · [agentic-safety-incident-lab](https://github.com/yingchen-coding/agentic-safety-incident-lab)
+- Source: [safety-harness/release-gate](https://github.com/yingchen-coding/safety-harness/tree/main/release-gate) · [safety-harness/regression-suite](https://github.com/yingchen-coding/safety-harness/tree/main/regression-suite) · [safety-harness/incident-lab](https://github.com/yingchen-coding/safety-harness/tree/main/incident-lab)
 
 ---
 
@@ -327,7 +327,7 @@ def grade_risk(regressions: list[Regression]) -> Verdict:
 ## Repository Structure
 
 ```
-model-safety-regression-suite/
+safety-harness/regression-suite/
 ├── adapters/
 │   ├── base.py            # EvalAdapter protocol
 │   ├── misuse.py          # Wrap misuse benchmark
@@ -739,13 +739,13 @@ Not all metrics are created equal. We classify metrics by their role and gaming 
 non_optimizable_metrics:
   post_incident_recurrence_rate:
     description: "% of promoted regressions that recur within 90 days"
-    source: "agentic-safety-incident-lab"
+    source: "safety-harness/incident-lab"
     lag: "90 days"
     why_non_gamable: "Cannot be optimized without actually fixing root causes"
 
   production_violation_rate:
     description: "% of production traffic flagged by monitoring"
-    source: "scalable-safeguards-eval-pipeline (production mode)"
+    source: "safety-harness/release-gate (production mode)"
     lag: "7-30 days"
     why_non_gamable: "Real traffic cannot be cherry-picked or optimized for"
 ```
@@ -1111,7 +1111,7 @@ Clear boundary between observation (⑤) and judgment (⑥):
 
 | Repo | Question Answered |
 |------|-------------------|
-| ⑤ scalable-safeguards-eval-pipeline | "What is happening in production?" |
+| ⑤ safety-harness/release-gate | "What is happening in production?" |
 | **⑥ This repo** | "Can we ship this change safely?" |
 
 **Input from ⑤:**
@@ -1130,10 +1130,10 @@ Clear boundary between observation (⑤) and judgment (⑥):
 |---------|------------------|
 | when-rlhf-fails-quietly | Understanding failure mechanisms |
 | agentic-misuse-benchmark | Misuse detection scenarios |
-| safeguards-stress-tests | Red-team attack templates |
-| scalable-safeguards-eval-pipeline | Observation & metrics (⑤) |
+| safety-harness/stress-testing | Red-team attack templates |
+| safety-harness/release-gate | Observation & metrics (⑤) |
 | **This project** | Judgment & release gating (⑥) |
-| agentic-safety-incident-lab | Post-incident learning (⑦) |
+| safety-harness/incident-lab | Post-incident learning (⑦) |
 
 ---
 

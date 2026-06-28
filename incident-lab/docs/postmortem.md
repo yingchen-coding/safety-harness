@@ -100,7 +100,7 @@ python generate_regression.py --incident incidents/INC_XXX.json
 - Must be included in release gating
 
 **Integration:**
-- Add to `model-safety-regression-suite`
+- Add to `safety-harness/regression-suite`
 - Include in CI/CD pipeline
 - Document expected behavior
 

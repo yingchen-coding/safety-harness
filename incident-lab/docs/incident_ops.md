@@ -203,7 +203,7 @@ Incident Detected
     │
     ├─► Regression Test Generated
     │       │
-    │       ├─► Added to model-safety-regression-suite
+    │       ├─► Added to safety-harness/regression-suite
     │       └─► Severity weight assigned
     │
     ├─► Next Release

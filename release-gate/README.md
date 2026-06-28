@@ -1,4 +1,4 @@
-> **Portfolio**: [Safety Memo](https://yingchen-coding.github.io/safety-memos/) · [when-rlhf-fails-quietly](https://github.com/yingchen-coding/when-rlhf-fails-quietly) · [agentic-misuse-benchmark](https://github.com/yingchen-coding/agentic-misuse-benchmark) · [agentic-safeguards-simulator](https://github.com/yingchen-coding/agentic-safeguards-simulator) · [safeguards-stress-tests](https://github.com/yingchen-coding/safeguards-stress-tests) · [scalable-safeguards-eval-pipeline](https://github.com/yingchen-coding/scalable-safeguards-eval-pipeline) · [model-safety-regression-suite](https://github.com/yingchen-coding/model-safety-regression-suite) · [agentic-safety-incident-lab](https://github.com/yingchen-coding/agentic-safety-incident-lab)
+> **Portfolio**: [Safety Memo](https://yingchen-coding.github.io/safety-memos/) · [when-rlhf-fails-quietly](https://github.com/yingchen-coding/when-rlhf-fails-quietly) · [agentic-misuse-benchmark](https://github.com/yingchen-coding/agentic-misuse-benchmark) · [safety-harness/simulator](https://github.com/yingchen-coding/safety-harness/tree/main/simulator) · [safety-harness/stress-testing](https://github.com/yingchen-coding/safety-harness/tree/main/stress-testing) · [safety-harness/release-gate](https://github.com/yingchen-coding/safety-harness/tree/main/release-gate) · [safety-harness/regression-suite](https://github.com/yingchen-coding/safety-harness/tree/main/regression-suite) · [safety-harness/incident-lab](https://github.com/yingchen-coding/safety-harness/tree/main/incident-lab)
 
 # Scalable Safeguards Evaluation Pipeline
 
@@ -7,7 +7,7 @@
 A production-style evaluation pipeline for monitoring multi-turn safety metrics, policy erosion, and misuse drift in agentic LLM systems.
 
 **Boundary clarification:**
-- [safeguards-stress-tests](https://github.com/yingchen-coding/safeguards-stress-tests): "How bad can we break it?" (adversarial discovery)
+- [safety-harness/stress-testing](https://github.com/yingchen-coding/safety-harness/tree/main/stress-testing): "How bad can we break it?" (adversarial discovery)
 - **This repo**: "Are we getting worse over time? Should we block release?" (trend + gating)
 
 **This repo does NOT:**
@@ -16,7 +16,7 @@ A production-style evaluation pipeline for monitoring multi-turn safety metrics,
 - ❌ Design benchmark tasks (misuse-benchmark's job)
 - ❌ Explain failure mechanisms (when-rlhf-fails' job)
 
-> **Boundary Statement**: This pipeline **measures risk**, it **does not approve releases**. Metrics, drift alerts, and trend data are inputs to the release gate. The pipeline cannot output OK/WARN/BLOCK. Final authority lives in [model-safety-regression-suite](https://github.com/yingchen-coding/model-safety-regression-suite).
+> **Boundary Statement**: This pipeline **measures risk**, it **does not approve releases**. Metrics, drift alerts, and trend data are inputs to the release gate. The pipeline cannot output OK/WARN/BLOCK. Final authority lives in [safety-harness/regression-suite](https://github.com/yingchen-coding/safety-harness/tree/main/regression-suite).
 
 ---
 
@@ -299,7 +299,7 @@ storage:
 ## Repository Structure
 
 ```
-scalable-safeguards-eval-pipeline/
+safety-harness/release-gate/
 ├── orchestrator/
 │   ├── scheduler.py       # Job queue with retries
 │   └── config.py          # Pipeline configuration
@@ -417,8 +417,8 @@ See [`core/budget_metrics.py`](core/budget_metrics.py) for implementation.
 This pipeline is designed to work with:
 
 - **[agentic-misuse-benchmark](https://github.com/yingchen-coding/agentic-misuse-benchmark)** — Scenario source
-- **[safeguards-stress-tests](https://github.com/yingchen-coding/safeguards-stress-tests)** — Attack templates
-- **[agentic-safeguards-simulator](https://github.com/yingchen-coding/agentic-safeguards-simulator)** — Safeguards under test
+- **[safety-harness/stress-testing](https://github.com/yingchen-coding/safety-harness/tree/main/stress-testing)** — Attack templates
+- **[safety-harness/simulator](https://github.com/yingchen-coding/safety-harness/tree/main/simulator)** — Safeguards under test
 
 ---
 

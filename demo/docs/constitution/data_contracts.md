@@ -60,7 +60,7 @@ Fields are required unless explicitly marked optional.
 ## Contract: ① → ② ③ ⑦ (Taxonomy)
 
 **Producer**: when-rlhf-fails-quietly
-**Consumers**: agentic-misuse-benchmark, agentic-safeguards-simulator, agentic-safety-incident-lab
+**Consumers**: agentic-misuse-benchmark, safety-harness/simulator, safety-harness/incident-lab
 
 ### Schema v1.0
 
@@ -88,8 +88,8 @@ failure_type:
 
 ## Contract: ④ → ⑤ ⑥ ⑦ (Stress Results)
 
-**Producer**: safeguards-stress-tests
-**Consumers**: scalable-safeguards-eval-pipeline, model-safety-regression-suite, agentic-safety-incident-lab
+**Producer**: safety-harness/stress-testing
+**Consumers**: safety-harness/release-gate, safety-harness/regression-suite, safety-harness/incident-lab
 
 ### Schema v1.0
 
@@ -124,8 +124,8 @@ failure_type:
 
 ## Contract: ⑤ → ⑥ (Eval Metrics)
 
-**Producer**: scalable-safeguards-eval-pipeline
-**Consumers**: model-safety-regression-suite
+**Producer**: safety-harness/release-gate
+**Consumers**: safety-harness/regression-suite
 
 ### Schema v1.0
 
@@ -182,7 +182,7 @@ failure_type:
 
 ## Contract: ⑥ → CI/CD (Gate Verdict)
 
-**Producer**: model-safety-regression-suite
+**Producer**: safety-harness/regression-suite
 **Consumers**: CI/CD pipelines
 
 ### Schema v1.0
@@ -230,8 +230,8 @@ failure_type:
 
 ## Contract: ⑦ → ⑥ (Promoted Regressions)
 
-**Producer**: agentic-safety-incident-lab
-**Consumers**: model-safety-regression-suite
+**Producer**: safety-harness/incident-lab
+**Consumers**: safety-harness/regression-suite
 
 ### Schema v1.0
 

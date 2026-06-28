@@ -154,7 +154,7 @@
 │                              ▼                                               │
 │  5. RELEASE GATING                                                           │
 │     ┌──────────────────────────────────────────────────────────────┐        │
-│     │  model-safety-regression-suite                                │        │
+│     │  safety-harness/regression-suite                                │        │
 │     │  → Run regression tests                                       │        │
 │     │  → Compare baseline vs candidate                              │        │
 │     │  → Emit OK/WARN/BLOCK verdict                                 │        │

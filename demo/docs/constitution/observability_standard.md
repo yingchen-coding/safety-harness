@@ -84,7 +84,7 @@ Example: "gate_2026-02-01T03:00:00Z_a1b2c3d4"
 {
   "timestamp": "2026-02-01T03:00:00.123Z",
   "level": "INFO",
-  "component": "model-safety-regression-suite",
+  "component": "safety-harness/regression-suite",
   "module": "gate.decision",
   "trace_id": "gate_2026-02-01T03:00:00Z_a1b2c3d4",
   "model_version": "gpt-4.2-2026-01-20",

@@ -22,12 +22,12 @@ Research → Detection → Prevention → Testing → Evaluation → Gating → 
 |------|----------------------|------|--------------|
 | ① when-rlhf-fails-quietly | Why RLHF fails silently | Failure taxonomy, causal mechanisms | Attack generation, safeguard implementation |
 | ② agentic-misuse-benchmark | Detect multi-turn attacks | Attack scenarios, detector benchmarks | Safeguard logic, release decisions |
-| ③ agentic-safeguards-simulator | How safeguards work | Policy hooks, bypass analysis | Stress testing, release gating |
-| ④ safeguards-stress-tests | How long safeguards survive | Adversarial pressure, erosion curves | Safeguard implementation, evaluation infra |
-| ⑤ scalable-safeguards-eval-pipeline | Production evaluation infra | Orchestration, SLOs, drift detection | Release decisions, safeguard logic |
-| ⑥ model-safety-regression-suite | Should we ship this model? | OK/WARN/BLOCK verdicts, baselines | Evaluation execution, incident analysis |
-| ⑦ agentic-safety-incident-lab | What failed in production? | RCA, blast radius, regression promotion | Release gating, safeguard design |
-| ⑧ agentic-safety-demo | Show the complete system | Orchestration, documentation | All of the above |
+| ③ safety-harness/simulator | How safeguards work | Policy hooks, bypass analysis | Stress testing, release gating |
+| ④ safety-harness/stress-testing | How long safeguards survive | Adversarial pressure, erosion curves | Safeguard implementation, evaluation infra |
+| ⑤ safety-harness/release-gate | Production evaluation infra | Orchestration, SLOs, drift detection | Release decisions, safeguard logic |
+| ⑥ safety-harness/regression-suite | Should we ship this model? | OK/WARN/BLOCK verdicts, baselines | Evaluation execution, incident analysis |
+| ⑦ safety-harness/incident-lab | What failed in production? | RCA, blast radius, regression promotion | Release gating, safeguard design |
+| ⑧ safety-harness/demo | Show the complete system | Orchestration, documentation | All of the above |
 
 ---
 
@@ -120,15 +120,15 @@ Before merging any PR, ask:
 
 ### Example 1: Adding release gate to safeguards-simulator
 **Wrong**: `safeguards/release_gate.py` in ③
-**Right**: Move to ⑥ model-safety-regression-suite
+**Right**: Move to ⑥ safety-harness/regression-suite
 
 ### Example 2: Adding incident replay to stress-tests
 **Wrong**: `replay/incident_replay.py` in ④
-**Right**: Move to ⑦ agentic-safety-incident-lab
+**Right**: Move to ⑦ safety-harness/incident-lab
 
 ### Example 3: Adding evaluation scheduler to regression-suite
 **Wrong**: `orchestrator/scheduler.py` in ⑥
-**Right**: Move to ⑤ scalable-safeguards-eval-pipeline
+**Right**: Move to ⑤ safety-harness/release-gate
 
 ---
 

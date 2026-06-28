@@ -17,7 +17,7 @@ This portfolio demonstrates end-to-end AI safety engineering, from understanding
 **Anthropic Research**: Constitutional AI uses a set of principles to guide model behavior, enabling self-critique and revision.
 
 **This Portfolio**:
-- **model-safety-regression-suite/config/constitution.yaml** implements Constitution-as-Code with executable principles (C1-C6)
+- **safety-harness/regression-suite/config/constitution.yaml** implements Constitution-as-Code with executable principles (C1-C6)
 - Principles are machine-checked at release gates, not just training-time
 - Adds enforcement layer: principles that pass training can still fail at deployment
 
@@ -39,7 +39,7 @@ This portfolio demonstrates end-to-end AI safety engineering, from understanding
 **Anthropic Research**: As AI systems become more capable, human oversight must scale without becoming a bottleneck.
 
 **This Portfolio**:
-- **model-safety-regression-suite/governance/human_review.py** implements tiered review based on risk severity
+- **safety-harness/regression-suite/governance/human_review.py** implements tiered review based on risk severity
 - Automated triage routes only high-risk decisions to humans
 - SLA enforcement and escalation paths prevent review bottlenecks
 - Audit trails maintain accountability without slowing releases
@@ -51,7 +51,7 @@ This portfolio demonstrates end-to-end AI safety engineering, from understanding
 **Anthropic Research**: Red teaming finds vulnerabilities before deployment, but manual red teaming doesn't scale.
 
 **This Portfolio**:
-- **safeguards-stress-tests** provides automated multi-turn red teaming harness
+- **safety-harness/stress-testing** provides automated multi-turn red teaming harness
 - **agentic-misuse-benchmark** defines structured attack scenarios for systematic coverage
 - Both track adversarial robustness over time (regression detection)
 
@@ -62,7 +62,7 @@ This portfolio demonstrates end-to-end AI safety engineering, from understanding
 **Anthropic Research**: Model evaluation must be comprehensive, reproducible, and actionable.
 
 **This Portfolio**:
-- **scalable-safeguards-eval-pipeline** demonstrates production-grade evaluation infrastructure
+- **safety-harness/release-gate** demonstrates production-grade evaluation infrastructure
 - Version tracking for model, safeguards, attacks, and benchmarks
 - Drift detection catches degradation before release
 - Statistical rigor with power analysis and confidence intervals
@@ -74,7 +74,7 @@ This portfolio demonstrates end-to-end AI safety engineering, from understanding
 **Anthropic Research**: Deployed systems reveal failure modes not caught in pre-deployment testing.
 
 **This Portfolio**:
-- **agentic-safety-incident-lab** institutionalizes production incidents
+- **safety-harness/incident-lab** institutionalizes production incidents
 - Every incident becomes a regression test via closed-loop promotion
 - Blast radius estimation prioritizes fixes by systemic impact
 - Counterfactual replay validates proposed mitigations
@@ -88,10 +88,10 @@ This portfolio demonstrates end-to-end AI safety engineering, from understanding
 | Role | Primary Portfolio Alignment | Specific Artifacts |
 |------|-----------------------------|--------------------|
 | Research Engineer, Reward Models | when-rlhf-fails-quietly | Failure taxonomy, reward hacking patterns |
-| Research Engineer, Post-training | model-safety-regression-suite | Release gating, constitution enforcement |
+| Research Engineer, Post-training | safety-harness/regression-suite | Release gating, constitution enforcement |
 | Research Scientist, Alignment Finetuning | config/constitution.yaml | Executable principles, alignment debt |
-| Applied Research, Red Team | safeguards-stress-tests, agentic-misuse-benchmark | Attack generation, detection metrics |
-| Infrastructure Engineer | scalable-safeguards-eval-pipeline | Scalable eval, drift detection |
+| Applied Research, Red Team | safety-harness/stress-testing, agentic-misuse-benchmark | Attack generation, detection metrics |
+| Infrastructure Engineer | safety-harness/release-gate | Scalable eval, drift detection |
 
 ---
 

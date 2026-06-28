@@ -199,11 +199,11 @@ agentic-misuse-benchmark ─────┐
         │                     │
         │ Detection scenarios │
         ▼                     │
-safeguards-stress-tests ──────┤
+safety-harness/stress-testing ──────┤
         │                     │
         │ Attack templates    │
         ▼                     ▼
-scalable-safeguards-eval-pipeline
+safety-harness/release-gate
         │
         │ Run evaluations at scale
         ▼

@@ -79,12 +79,12 @@ This document shows how the repository structure reflects the organizational des
 |------|---------------|----------------|
 | ① when-rlhf-fails-quietly | Safety Research | Research Scientist |
 | ② agentic-misuse-benchmark | Detection Engineering | ML Engineer (Detection) |
-| ③ agentic-safeguards-simulator | Defense Engineering | Security Engineer |
-| ④ safeguards-stress-tests | Red Team | Adversarial ML Engineer |
-| ⑤ scalable-safeguards-eval-pipeline | Evaluation Infrastructure | Platform Engineer |
-| ⑥ model-safety-regression-suite | Release Governance | Safety Lead / Release Manager |
-| ⑦ agentic-safety-incident-lab | Incident Response | SRE / Incident Commander |
-| ⑧ agentic-safety-demo | Developer Relations | Technical Program Manager |
+| ③ safety-harness/simulator | Defense Engineering | Security Engineer |
+| ④ safety-harness/stress-testing | Red Team | Adversarial ML Engineer |
+| ⑤ safety-harness/release-gate | Evaluation Infrastructure | Platform Engineer |
+| ⑥ safety-harness/regression-suite | Release Governance | Safety Lead / Release Manager |
+| ⑦ safety-harness/incident-lab | Incident Response | SRE / Incident Commander |
+| ⑧ safety-harness/demo | Developer Relations | Technical Program Manager |
 
 ---
 
