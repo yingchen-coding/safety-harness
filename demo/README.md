@@ -443,78 +443,78 @@ The System Constitution is the explicit contract that eliminates ambiguity about
 **Executive & Leadership:**
 | Document | Description |
 |----------|-------------|
-| [exec_summary.md](docs/exec_summary.md) | Executive summary for leadership |
-| [board_level_safety_update.md](docs/board_level_safety_update.md) | Board of Directors safety briefing |
-| [safety_investment_roi_model.md](docs/safety_investment_roi_model.md) | Cost of incidents vs safeguards |
-| [annual_safety_roadmap.md](docs/annual_safety_roadmap.md) | Strategic investment plan |
+| [exec_summary.md](docs/exec/exec_summary.md) | Executive summary for leadership |
+| [board_level_safety_update.md](docs/exec/board_level_safety_update.md) | Board of Directors safety briefing |
+| [safety_investment_roi_model.md](docs/strategy/safety_investment_roi_model.md) | Cost of incidents vs safeguards |
+| [annual_safety_roadmap.md](docs/strategy/annual_safety_roadmap.md) | Strategic investment plan |
 
 **Oncall & Operations:**
 | Document | Description |
 |----------|-------------|
-| [oncall_playbook.md](docs/oncall_playbook.md) | Incident response runbook |
-| [oncall_incident_playbook.md](docs/oncall_incident_playbook.md) | 10-minute incident containment runbook |
-| [kill_switch_and_rollback_policy.md](docs/kill_switch_and_rollback_policy.md) | Emergency shutdown policy |
-| [safety_metrics_dashboard_spec.md](docs/safety_metrics_dashboard_spec.md) | Grafana/Datadog dashboard spec |
+| [oncall_playbook.md](docs/operations/oncall_playbook.md) | Incident response runbook |
+| [oncall_incident_playbook.md](docs/operations/oncall_incident_playbook.md) | 10-minute incident containment runbook |
+| [kill_switch_and_rollback_policy.md](docs/release/kill_switch_and_rollback_policy.md) | Emergency shutdown policy |
+| [safety_metrics_dashboard_spec.md](docs/operations/safety_metrics_dashboard_spec.md) | Grafana/Datadog dashboard spec |
 
 **Governance & Compliance:**
 | Document | Description |
 |----------|-------------|
-| [regulator_auditor_briefing.md](docs/regulator_auditor_briefing.md) | 10-min compliance brief for auditors |
-| [ai_safety_regulatory_mapping.md](docs/ai_safety_regulatory_mapping.md) | EU AI Act / NIST RMF mapping |
-| [residual_risk_acceptance_memo.md](docs/residual_risk_acceptance_memo.md) | VP/Legal risk sign-off template |
-| [safety_governance_org_raci.md](docs/safety_governance_org_raci.md) | Org chart + RACI matrix |
-| [safety_exception_process.md](docs/safety_exception_process.md) | Controlled gate override policy |
-| [post_incident_external_disclosure.md](docs/post_incident_external_disclosure.md) | Public incident disclosure template |
+| [regulator_auditor_briefing.md](docs/exec/regulator_auditor_briefing.md) | 10-min compliance brief for auditors |
+| [ai_safety_regulatory_mapping.md](docs/reference/ai_safety_regulatory_mapping.md) | EU AI Act / NIST RMF mapping |
+| [residual_risk_acceptance_memo.md](docs/governance/residual_risk_acceptance_memo.md) | VP/Legal risk sign-off template |
+| [safety_governance_org_raci.md](docs/governance/safety_governance_org_raci.md) | Org chart + RACI matrix |
+| [safety_exception_process.md](docs/governance/safety_exception_process.md) | Controlled gate override policy |
+| [post_incident_external_disclosure.md](docs/exec/post_incident_external_disclosure.md) | Public incident disclosure template |
 
 **Engineering & Research:**
 | Document | Description |
 |----------|-------------|
-| [threat_model.md](docs/threat_model.md) | Adversaries, capabilities, coverage gaps |
-| [failure_budget.md](docs/failure_budget.md) | Release thresholds, failure budget, anti-gaming |
-| [metrics_glossary.md](docs/metrics_glossary.md) | Safety metrics definitions |
-| [safety_slo_error_budget.md](docs/safety_slo_error_budget.md) | SRE-style safety SLOs and error budgets |
-| [pre_mortem_12_month_failure.md](docs/pre_mortem_12_month_failure.md) | How this system fails |
-| [safety_vs_velocity_tradeoff_framework.md](docs/safety_vs_velocity_tradeoff_framework.md) | Speed vs safety decision framework |
+| [threat_model.md](docs/threat-model/THREAT_MODEL.md) | Adversaries, capabilities, coverage gaps |
+| [failure_budget.md](docs/release/FAILURE_BUDGET.md) | Release thresholds, failure budget, anti-gaming |
+| [metrics_glossary.md](docs/reference/metrics_glossary.md) | Safety metrics definitions |
+| [safety_slo_error_budget.md](docs/release/safety_slo_error_budget.md) | SRE-style safety SLOs and error budgets |
+| [pre_mortem_12_month_failure.md](docs/strategy/pre_mortem_12_month_failure.md) | How this system fails |
+| [safety_vs_velocity_tradeoff_framework.md](docs/strategy/safety_vs_velocity_tradeoff_framework.md) | Speed vs safety decision framework |
 
 ### Full Documentation Index
 
 | Document | Description |
 |----------|-------------|
-| [exec_summary.md](docs/exec_summary.md) | Executive summary for leadership |
-| [threat_model.md](docs/threat_model.md) | Adversaries, capabilities, coverage gaps |
-| [failure_budget.md](docs/failure_budget.md) | Release thresholds, failure budget, anti-gaming |
-| [launch_checklist.md](docs/launch_checklist.md) | Pre-release checklist, accountability matrix |
-| [oncall_playbook.md](docs/oncall_playbook.md) | Incident response runbook |
-| [metrics_glossary.md](docs/metrics_glossary.md) | Safety metrics definitions |
-| [security_review_checklist.md](docs/security_review_checklist.md) | ProdSec / Infra sign-off checklist |
-| [security_release_workflow.md](docs/security_release_workflow.md) | Security review -> release sign-off flow |
-| [release_readiness_checklist.md](docs/release_readiness_checklist.md) | Hard gates + stop-the-line conditions |
-| [oncall_incident_playbook.md](docs/oncall_incident_playbook.md) | 10-minute incident containment runbook |
-| [model_card_safety.md](docs/model_card_safety.md) | Model card safety section template |
-| [safety_metrics_dashboard_spec.md](docs/safety_metrics_dashboard_spec.md) | Grafana/Datadog dashboard spec |
-| [residual_risk_acceptance_memo.md](docs/residual_risk_acceptance_memo.md) | VP/Legal risk sign-off template |
-| [safety_slo_error_budget.md](docs/safety_slo_error_budget.md) | SRE-style safety SLOs and error budgets |
-| [board_level_safety_update.md](docs/board_level_safety_update.md) | Board of Directors safety briefing |
-| [regulator_auditor_briefing.md](docs/regulator_auditor_briefing.md) | 10-min compliance brief for auditors |
-| [post_incident_external_disclosure.md](docs/post_incident_external_disclosure.md) | Public incident disclosure template |
-| [ai_safety_regulatory_mapping.md](docs/ai_safety_regulatory_mapping.md) | EU AI Act / NIST RMF mapping |
-| [kill_switch_and_rollback_policy.md](docs/kill_switch_and_rollback_policy.md) | Emergency shutdown policy |
-| [model_decommissioning_policy.md](docs/model_decommissioning_policy.md) | Model retirement workflow |
-| [capability_risk_register.md](docs/capability_risk_register.md) | Feature-level risk tracking |
-| [safety_exception_process.md](docs/safety_exception_process.md) | Controlled gate override policy |
-| [third_party_risk_policy.md](docs/third_party_risk_policy.md) | External dependency governance |
-| [safety_governance_org_raci.md](docs/safety_governance_org_raci.md) | Org chart + RACI matrix |
-| [red_team_program_charter.md](docs/red_team_program_charter.md) | Annual red-team program plan |
-| [ai_safety_risk_heatmap.md](docs/ai_safety_risk_heatmap.md) | Capabilities x Harms x Controls |
-| [annual_safety_roadmap.md](docs/annual_safety_roadmap.md) | Strategic investment plan |
-| [safety_investment_roi_model.md](docs/safety_investment_roi_model.md) | Cost of incidents vs safeguards |
-| [pre_mortem_12_month_failure.md](docs/pre_mortem_12_month_failure.md) | How this system fails |
-| [safety_vs_velocity_tradeoff_framework.md](docs/safety_vs_velocity_tradeoff_framework.md) | Speed vs safety decision framework |
-| [what_we_will_not_build_capability_boundaries.md](docs/what_we_will_not_build_capability_boundaries.md) | Explicit no-go capabilities |
-| [first_90_days_safety_strategy.md](docs/first_90_days_safety_strategy.md) | New product safety bootstrap |
-| [safety_principles_codex.md](docs/safety_principles_codex.md) | Foundational safety principles |
-| [interview_onepager.md](docs/interview_onepager.md) | Portfolio system overview |
-| [why_closed_loop_beats_static_eval.md](docs/why_closed_loop_beats_static_eval.md) | Architecture comparison with industry practices |
+| [exec_summary.md](docs/exec/exec_summary.md) | Executive summary for leadership |
+| [threat_model.md](docs/threat-model/THREAT_MODEL.md) | Adversaries, capabilities, coverage gaps |
+| [failure_budget.md](docs/release/FAILURE_BUDGET.md) | Release thresholds, failure budget, anti-gaming |
+| [launch_checklist.md](docs/release/LAUNCH_CHECKLIST.md) | Pre-release checklist, accountability matrix |
+| [oncall_playbook.md](docs/operations/oncall_playbook.md) | Incident response runbook |
+| [metrics_glossary.md](docs/reference/metrics_glossary.md) | Safety metrics definitions |
+| [security_review_checklist.md](docs/threat-model/security_review_checklist.md) | ProdSec / Infra sign-off checklist |
+| [security_release_workflow.md](docs/release/security_release_workflow.md) | Security review -> release sign-off flow |
+| [release_readiness_checklist.md](docs/release/release_readiness_checklist.md) | Hard gates + stop-the-line conditions |
+| [oncall_incident_playbook.md](docs/operations/oncall_incident_playbook.md) | 10-minute incident containment runbook |
+| [model_card_safety.md](docs/operations/model_card_safety.md) | Model card safety section template |
+| [safety_metrics_dashboard_spec.md](docs/operations/safety_metrics_dashboard_spec.md) | Grafana/Datadog dashboard spec |
+| [residual_risk_acceptance_memo.md](docs/governance/residual_risk_acceptance_memo.md) | VP/Legal risk sign-off template |
+| [safety_slo_error_budget.md](docs/release/safety_slo_error_budget.md) | SRE-style safety SLOs and error budgets |
+| [board_level_safety_update.md](docs/exec/board_level_safety_update.md) | Board of Directors safety briefing |
+| [regulator_auditor_briefing.md](docs/exec/regulator_auditor_briefing.md) | 10-min compliance brief for auditors |
+| [post_incident_external_disclosure.md](docs/exec/post_incident_external_disclosure.md) | Public incident disclosure template |
+| [ai_safety_regulatory_mapping.md](docs/reference/ai_safety_regulatory_mapping.md) | EU AI Act / NIST RMF mapping |
+| [kill_switch_and_rollback_policy.md](docs/release/kill_switch_and_rollback_policy.md) | Emergency shutdown policy |
+| [model_decommissioning_policy.md](docs/governance/model_decommissioning_policy.md) | Model retirement workflow |
+| [capability_risk_register.md](docs/governance/capability_risk_register.md) | Feature-level risk tracking |
+| [safety_exception_process.md](docs/governance/safety_exception_process.md) | Controlled gate override policy |
+| [third_party_risk_policy.md](docs/governance/third_party_risk_policy.md) | External dependency governance |
+| [safety_governance_org_raci.md](docs/governance/safety_governance_org_raci.md) | Org chart + RACI matrix |
+| [red_team_program_charter.md](docs/threat-model/red_team_program_charter.md) | Annual red-team program plan |
+| [ai_safety_risk_heatmap.md](docs/threat-model/ai_safety_risk_heatmap.md) | Capabilities x Harms x Controls |
+| [annual_safety_roadmap.md](docs/strategy/annual_safety_roadmap.md) | Strategic investment plan |
+| [safety_investment_roi_model.md](docs/strategy/safety_investment_roi_model.md) | Cost of incidents vs safeguards |
+| [pre_mortem_12_month_failure.md](docs/strategy/pre_mortem_12_month_failure.md) | How this system fails |
+| [safety_vs_velocity_tradeoff_framework.md](docs/strategy/safety_vs_velocity_tradeoff_framework.md) | Speed vs safety decision framework |
+| [what_we_will_not_build_capability_boundaries.md](docs/threat-model/what_we_will_not_build_capability_boundaries.md) | Explicit no-go capabilities |
+| [first_90_days_safety_strategy.md](docs/strategy/first_90_days_safety_strategy.md) | New product safety bootstrap |
+| [safety_principles_codex.md](docs/governance/safety_principles_codex.md) | Foundational safety principles |
+| [interview_onepager.md](docs/exec/interview_onepager.md) | Portfolio system overview |
+| [why_closed_loop_beats_static_eval.md](docs/strategy/why_closed_loop_beats_static_eval.md) | Architecture comparison with industry practices |
 
 ---
 
