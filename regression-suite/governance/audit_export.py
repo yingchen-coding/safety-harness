@@ -506,7 +506,7 @@ if __name__ == "__main__":
         release_id="release-2026-02-01",
         model_version="claude-3.6",
         purpose="internal_audit",
-        prepared_by="audit-system@company.com",
+        prepared_by="CONTACT_PLACEHOLDER",
     )
 
     # Add artifacts
@@ -517,7 +517,7 @@ if __name__ == "__main__":
             "delayed_failure_rate": 0.28,
             "policy_erosion_slope": 0.18,
         },
-        created_by="eval-pipeline@company.com",
+        created_by="CONTACT_PLACEHOLDER",
     )
 
     exporter.add_decision_artifact(
@@ -527,7 +527,7 @@ if __name__ == "__main__":
             "reviewer": "Jane Smith",
             "justification": "Risk accepted with enhanced monitoring",
         },
-        created_by="jane.smith@company.com",
+        created_by="CONTACT_PLACEHOLDER",
     )
 
     # Generate compliance report
@@ -537,7 +537,7 @@ if __name__ == "__main__":
     )
 
     # Finalize
-    package_hash = exporter.finalize_package(package, approved_by="safety-lead@company.com")
+    package_hash = exporter.finalize_package(package, approved_by="CONTACT_PLACEHOLDER")
 
     print(f"Package ID: {package.package_id}")
     print(f"Package hash: {package_hash}")

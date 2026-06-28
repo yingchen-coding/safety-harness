@@ -217,4 +217,4 @@ Actual production latency will vary based on:
 For latency optimization questions:
 
 Ying Chen, Ph.D.
-blueoceanally@gmail.com
+CONTACT_PLACEHOLDER

@@ -5,7 +5,7 @@
 
   "linked_exception": "EX-2026-Q1-001",
   "exception_details": {
-    "approved_by": "Alice Chen (Head_of_Safety)",
+    "approved_by": "Example Reviewer (Head_of_Safety)",
     "approved_at": "2026-02-01T12:00:00Z",
     "ttl_days": 7,
     "expires_at": "2026-02-08T12:00:00Z"

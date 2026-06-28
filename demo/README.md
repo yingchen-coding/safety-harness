@@ -543,7 +543,7 @@ The System Constitution is the explicit contract that eliminates ambiguity about
 ## Contact
 
 Ying Chen, Ph.D.
-blueoceanally@gmail.com
+CONTACT_PLACEHOLDER
 
 ---
 

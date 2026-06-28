@@ -66,8 +66,8 @@ This is not attributed to any single individual or team.
 ## 7. Contact & Support
 
 If you believe you were impacted or have concerns:
-- Support: [support@company.com]
-- Security: [security@company.com]
+- Support: [CONTACT_PLACEHOLDER]
+- Security: [CONTACT_PLACEHOLDER]
 
 We appreciate the community's help in improving system safety.
 

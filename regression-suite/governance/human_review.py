@@ -414,10 +414,10 @@ class ReviewWorkflow:
         """Get reviewer assignees based on tier."""
         # In production, this would query an org chart / on-call system
         tier_assignees = {
-            ReviewTier.TIER_1: ["safety-engineer@company.com"],
-            ReviewTier.TIER_2: ["safety-engineer@company.com", "safety-lead@company.com"],
-            ReviewTier.TIER_3: ["safety-lead@company.com", "legal@company.com", "vp-eng@company.com"],
-            ReviewTier.EMERGENCY: ["safety-lead@company.com", "cto@company.com"],
+            ReviewTier.TIER_1: ["CONTACT_PLACEHOLDER"],
+            ReviewTier.TIER_2: ["CONTACT_PLACEHOLDER", "CONTACT_PLACEHOLDER"],
+            ReviewTier.TIER_3: ["CONTACT_PLACEHOLDER", "CONTACT_PLACEHOLDER", "CONTACT_PLACEHOLDER"],
+            ReviewTier.EMERGENCY: ["CONTACT_PLACEHOLDER", "CONTACT_PLACEHOLDER"],
         }
         return tier_assignees.get(tier, [])
 
@@ -488,7 +488,7 @@ if __name__ == "__main__":
                 "delayed_failure_rate": {"baseline": 0.21, "candidate": 0.34, "delta": 0.13},
             },
             evidence_artifacts=["reports/regression_report.html", "data/traces.jsonl"],
-            requestor="release-engineer@company.com",
+            requestor="CONTACT_PLACEHOLDER",
             justification="Critical product launch; mitigation monitoring in place",
             requirement=requirement,
         )

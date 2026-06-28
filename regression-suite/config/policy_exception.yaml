@@ -23,7 +23,7 @@ exceptions:
       Temporary exception pending fix for policy erosion in long-horizon
       multi-tool trajectories. Detector threshold lowered to 0.70 pending
       retraining with expanded dataset.
-    owner: "blueoceanally@gmail.com"
+    owner: "CONTACT_PLACEHOLDER"
     approved_by: "Safety Council"
     conditions:
       - "Daily monitoring of flagged conversations"
@@ -38,7 +38,7 @@ exceptions:
     rationale: >
       Power was 0.72 (below 0.80 threshold) for coordinated misuse scenarios.
       Exception allows release while additional evaluation data is collected.
-    owner: "blueoceanally@gmail.com"
+    owner: "CONTACT_PLACEHOLDER"
     approved_by: "Evaluation Infrastructure"
     conditions:
       - "Power analysis rerun weekly"

@@ -689,7 +689,7 @@ See [docs/postmortem.md](docs/postmortem.md) for our 7-step framework:
 ## Contact
 
 Ying Chen, Ph.D.
-blueoceanally@gmail.com
+CONTACT_PLACEHOLDER
 
 ---
 
