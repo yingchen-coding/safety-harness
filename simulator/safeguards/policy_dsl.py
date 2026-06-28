@@ -13,7 +13,6 @@ Design Philosophy:
 
 from dataclasses import dataclass
 from typing import Any, Dict, List
-import yaml
 import operator
 
 from .api import Decision, GuardContext, GuardDecision
@@ -54,7 +53,13 @@ class PolicyEngine:
         self.rules: List[PolicyRule] = []
 
     def load_from_yaml(self, path: str) -> None:
-        """Load policy rules from YAML file."""
+        """Load policy rules from YAML file.
+
+        PyYAML is imported lazily so the engine itself stays stdlib-only — yaml is only
+        required if you actually load policy from a YAML file (load_from_dict needs nothing).
+        """
+        import yaml
+
         with open(path, 'r') as f:
             config = yaml.safe_load(f)
 
