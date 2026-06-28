@@ -1,5 +1,8 @@
 # safety-harness
 
+[![CI](https://github.com/yingchen-coding/safety-harness/actions/workflows/ci.yml/badge.svg)](https://github.com/yingchen-coding/safety-harness/actions/workflows/ci.yml)
+[![License: CC BY-NC 4.0](https://img.shields.io/badge/license-CC%20BY--NC%204.0-lightgrey.svg)](LICENSE)
+
 A **closed-loop safety harness for agentic LLMs** — find failures, lock them in as regressions, gate
 releases on them, and replay real incidents. Each stage is a self-contained module; together they
 form the loop:
