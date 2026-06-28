@@ -1,6 +1,6 @@
-# Agentic Safety System
+# safety-harness
 
-A **closed-loop safety system for agentic LLMs** — find failures, lock them in as regressions, gate
+A **closed-loop safety harness for agentic LLMs** — find failures, lock them in as regressions, gate
 releases on them, and replay real incidents. Each stage is a self-contained module; together they
 form the loop:
 
