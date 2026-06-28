@@ -141,32 +141,40 @@ class PolicyEngine:
         }
 
         try:
-            # Parse simple conditions like "drift_score > 0.5"
-            # For production, use a proper expression parser
-            parts = condition.replace('and', '&&').replace('or', '||').split()
+            # Parse simple conditions like "drift_score > 0.5".
+            # For production, use a proper expression parser.
+            #
+            # Logical operators are split on word boundaries (" or " / " and ") so they do NOT
+            # corrupt identifiers that merely contain the substrings "or"/"and" — e.g. the
+            # feature name "drift_score" contains "or". OR has the lowest precedence, then AND,
+            # then a leaf comparison.
+            condition = condition.strip()
 
-            # Simple single-condition evaluation
+            if " or " in condition:
+                return any(
+                    self._evaluate_condition(c, namespace)
+                    for c in condition.split(" or ")
+                )
+
+            if " and " in condition:
+                return all(
+                    self._evaluate_condition(c, namespace)
+                    for c in condition.split(" and ")
+                )
+
+            # Leaf comparison: "left op right"
+            parts = condition.split()
             if len(parts) == 3:
                 left, op, right = parts
-                left_val = namespace.get(left, left)
+                if op not in ops:
+                    return False
+                left_val = namespace.get(left, self._parse_value(left, namespace))
                 right_val = self._parse_value(right, namespace)
-                return ops[op](left_val, right_val)
-
-            # Complex conditions with 'and'
-            if '&&' in condition:
-                sub_conditions = condition.split('&&')
-                return all(
-                    self._evaluate_condition(c.strip(), namespace)
-                    for c in sub_conditions
-                )
-
-            # Complex conditions with 'or'
-            if '||' in condition:
-                sub_conditions = condition.split('||')
-                return any(
-                    self._evaluate_condition(c.strip(), namespace)
-                    for c in sub_conditions
-                )
+                try:
+                    return bool(ops[op](left_val, right_val))
+                except TypeError:
+                    # Mismatched types (e.g. comparing a string to a number) never match.
+                    return False
 
             return False
 
