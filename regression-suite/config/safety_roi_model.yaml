@@ -1,0 +1,51 @@
+# Safety ROI Model - Governance Parameters
+#
+# This configuration controls the financial risk model
+# used to generate board-level investment recommendations.
+#
+# All parameters are heuristic and should be calibrated
+# to your organization's risk profile and incident history.
+
+risk_model:
+  # Risk increase per open alignment debt
+  per_alignment_debt_risk_increase_pct: 5
+
+  # Multipliers by severity
+  severity_multipliers:
+    critical: 3.0
+    high: 1.5
+    medium: 1.0
+    low: 0.5
+
+  # Expected loss per incident
+  incident_expected_loss_usd: 5000000
+
+  # Critical incidents cost more
+  critical_incident_multiplier: 4.0
+
+investment_model:
+  # Risk reduction per $100k investment
+  per_100k_usd_risk_reduction_pct: 8
+
+  # FTE cost assumption
+  safety_fte_annual_cost_usd: 250000
+
+  # Diminishing returns on investment
+  diminishing_returns:
+    enabled: true
+    curve: log
+
+  # Maximum achievable risk reduction
+  max_risk_reduction_pct: 80
+
+reporting:
+  currency: USD
+  board_language: true
+  include_sensitivity_analysis: true
+
+# Governance
+governance:
+  model_owner: Head_of_Safety
+  review_cadence: quarterly
+  last_calibration: "2026-01-15"
+  calibration_method: historical_incident_analysis

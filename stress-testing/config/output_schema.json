@@ -1,0 +1,161 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Stress Test Output Schema",
+  "description": "Machine-readable output contract for downstream repos (eval-pipeline, regression-suite)",
+  "type": "object",
+  "required": ["system_under_test", "attacker_level", "metrics", "metadata"],
+  "properties": {
+    "system_under_test": {
+      "type": "object",
+      "description": "Target system identification",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "System identifier",
+          "examples": ["agentic-safeguards-simulator:v0.3", "claude-3-sonnet-raw"]
+        },
+        "version": {
+          "type": "string"
+        },
+        "target_type": {
+          "type": "string",
+          "enum": ["raw_llm", "agent_without_safeguards", "agent_with_safeguards"]
+        }
+      },
+      "required": ["name", "target_type"]
+    },
+    "attacker_level": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 3,
+      "description": "Attacker capability level (0=naive, 1=scripted, 2=adaptive_llm, 3=goal_optimizing)"
+    },
+    "metrics": {
+      "type": "object",
+      "description": "Core stress test metrics",
+      "properties": {
+        "half_life_turns": {
+          "type": "number",
+          "description": "Turns until compliance drops below 50%"
+        },
+        "first_failure_p50": {
+          "type": "number",
+          "description": "Median turn of first violation"
+        },
+        "first_failure_p95": {
+          "type": "number",
+          "description": "95th percentile turn of first violation"
+        },
+        "safety_elasticity": {
+          "type": "number",
+          "description": "Failure rate increase per attacker level (d(failure)/d(level))"
+        },
+        "recovery_failure_rate": {
+          "type": "number",
+          "description": "Rate of failed recovery after soft refusal"
+        },
+        "attack_success_rate": {
+          "type": "object",
+          "description": "Success rate by attack family",
+          "properties": {
+            "jailbreak": {"type": "number"},
+            "decomposition": {"type": "number"},
+            "hallucination": {"type": "number"},
+            "context_manipulation": {"type": "number"},
+            "tool_misuse": {"type": "number"}
+          }
+        },
+        "erosion_slope": {
+          "type": "number",
+          "description": "Rate of compliance degradation per turn"
+        },
+        "coverage_achieved": {
+          "type": "number",
+          "description": "Fraction of attack space covered (0-1)"
+        }
+      },
+      "required": ["half_life_turns", "first_failure_p50", "attack_success_rate"]
+    },
+    "regression_flags": {
+      "type": "array",
+      "description": "Attack categories flagged for regression testing",
+      "items": {
+        "type": "string",
+        "enum": ["jailbreak", "decomposition", "hallucination", "context_manipulation", "tool_misuse"]
+      }
+    },
+    "discovered_failures": {
+      "type": "array",
+      "description": "Newly discovered failure cases for promotion",
+      "items": {
+        "type": "object",
+        "properties": {
+          "attack_family": {"type": "string"},
+          "mutation_operator": {"type": "string"},
+          "failure_turn": {"type": "integer"},
+          "trajectory_hash": {"type": "string"},
+          "severity": {
+            "type": "string",
+            "enum": ["low", "medium", "high", "critical"]
+          }
+        }
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "run_id": {"type": "string"},
+        "timestamp": {"type": "string", "format": "date-time"},
+        "total_rollouts": {"type": "integer"},
+        "turns_per_rollout": {"type": "integer"},
+        "total_api_calls": {"type": "integer"},
+        "wall_time_seconds": {"type": "number"}
+      },
+      "required": ["run_id", "timestamp", "total_rollouts"]
+    }
+  },
+  "examples": [
+    {
+      "system_under_test": {
+        "name": "agentic-safeguards-simulator",
+        "version": "0.3.0",
+        "target_type": "agent_with_safeguards"
+      },
+      "attacker_level": 2,
+      "metrics": {
+        "half_life_turns": 4.8,
+        "first_failure_p50": 3.9,
+        "first_failure_p95": 7.2,
+        "safety_elasticity": 0.15,
+        "recovery_failure_rate": 0.32,
+        "attack_success_rate": {
+          "jailbreak": 0.05,
+          "decomposition": 0.31,
+          "hallucination": 0.42,
+          "context_manipulation": 0.28,
+          "tool_misuse": 0.35
+        },
+        "erosion_slope": 0.08,
+        "coverage_achieved": 0.42
+      },
+      "regression_flags": ["hallucination", "tool_misuse"],
+      "discovered_failures": [
+        {
+          "attack_family": "hallucination",
+          "mutation_operator": "authority_claim",
+          "failure_turn": 4,
+          "trajectory_hash": "abc123",
+          "severity": "high"
+        }
+      ],
+      "metadata": {
+        "run_id": "stress_20260130_143052",
+        "timestamp": "2026-01-30T14:30:52Z",
+        "total_rollouts": 100,
+        "turns_per_rollout": 10,
+        "total_api_calls": 1000,
+        "wall_time_seconds": 342.5
+      }
+    }
+  ]
+}

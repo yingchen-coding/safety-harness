@@ -1,0 +1,97 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Blast Radius Output Schema",
+  "description": "Machine-readable blast radius estimation output",
+  "type": "object",
+  "required": ["incident_id", "affected_suites", "estimated_prevalence", "risk_level"],
+  "properties": {
+    "incident_id": {
+      "type": "string",
+      "description": "The incident being analyzed"
+    },
+    "vulnerability_pattern": {
+      "type": "string",
+      "description": "The pattern that caused the vulnerability"
+    },
+    "affected_suites": {
+      "type": "object",
+      "description": "Scenarios affected in each evaluation suite",
+      "properties": {
+        "agentic-misuse-benchmark": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "Affected scenario IDs in misuse benchmark"
+        },
+        "safeguards-stress-tests": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "Affected attack templates in stress tests"
+        },
+        "production-traffic": {
+          "type": "object",
+          "properties": {
+            "estimated_conversations": {"type": "integer"},
+            "sample_rate": {"type": "number"}
+          }
+        }
+      }
+    },
+    "estimated_prevalence": {
+      "type": "string",
+      "description": "Estimated % of scenarios affected"
+    },
+    "risk_level": {
+      "type": "string",
+      "enum": ["isolated", "localized", "moderate", "systemic"],
+      "description": "Scope of the vulnerability"
+    },
+    "similar_past_incidents": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "IDs of similar historical incidents"
+    },
+    "confidence": {
+      "type": "string",
+      "enum": ["low", "medium", "high"],
+      "description": "Confidence in the blast radius estimate"
+    },
+    "recommendations": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "Recommended actions based on blast radius"
+    }
+  },
+  "examples": [
+    {
+      "incident_id": "INC_004",
+      "vulnerability_pattern": "Single-turn intent analysis fails on task decomposition",
+      "affected_suites": {
+        "agentic-misuse-benchmark": [
+          "coordinated_misuse/CM_01",
+          "coordinated_misuse/CM_04",
+          "coordinated_misuse/CM_07",
+          "task_decomposition/TD_02",
+          "task_decomposition/TD_05"
+        ],
+        "safeguards-stress-tests": [
+          "decomposition_bypass_v3",
+          "roleplay_chain_v2",
+          "incremental_capability_v1"
+        ],
+        "production-traffic": {
+          "estimated_conversations": 1247,
+          "sample_rate": 0.01
+        }
+      },
+      "estimated_prevalence": "12.4% of coordinated misuse scenarios",
+      "risk_level": "systemic",
+      "similar_past_incidents": ["INC_001", "INC_002"],
+      "confidence": "medium",
+      "recommendations": [
+        "Immediate: Add trajectory-level intent aggregation",
+        "Short-term: Implement capability accumulation detection",
+        "Long-term: Review all multi-turn scenarios in benchmark"
+      ]
+    }
+  ]
+}

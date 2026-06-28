@@ -1,0 +1,191 @@
+# Safeguard Policy DSL
+# ====================
+# Declarative policy configuration for runtime safeguard behavior.
+# This DSL enables platform teams to configure safeguards without code changes.
+
+version: "1.0"
+description: "Production safeguard policy configuration"
+
+# Policy execution order: evaluated top-to-bottom, first match wins
+policies:
+
+  # Critical: High-risk tool with elevated drift
+  - name: critical_tool_drift
+    description: "Block high-risk tool calls when drift is elevated"
+    enabled: true
+    priority: 1
+    condition:
+      all:
+        - tool_risk: high
+        - drift_score: ">0.4"
+    action: HARD_STOP
+    message: "High-risk tool call blocked due to elevated intent drift"
+    escalation:
+      notify: ["oncall", "security"]
+      create_incident: true
+
+  # High: Any tool call with very high drift
+  - name: extreme_drift
+    description: "Block any action when drift exceeds critical threshold"
+    enabled: true
+    priority: 2
+    condition:
+      drift_score: ">0.7"
+    action: HARD_STOP
+    message: "Action blocked due to extreme intent drift from stated goal"
+    escalation:
+      notify: ["oncall"]
+      create_incident: false
+
+  # Medium: Ambiguous intent requires clarification
+  - name: ambiguous_intent
+    description: "Request clarification when intent confidence is low"
+    enabled: true
+    priority: 3
+    condition:
+      intent_confidence: "<0.6"
+    action: SOFT_STOP
+    message: "Could you clarify your request? I want to make sure I understand correctly."
+    escalation:
+      notify: []
+      create_incident: false
+
+  # Medium: Moderate drift with borderline tool
+  - name: moderate_risk_drift
+    description: "Soft stop for borderline tools with moderate drift"
+    enabled: true
+    priority: 4
+    condition:
+      all:
+        - tool_risk: medium
+        - drift_score: ">0.3"
+    action: SOFT_STOP
+    message: "This request seems to have shifted from your original goal. Should I proceed?"
+    escalation:
+      notify: []
+      create_incident: false
+
+  # Low: Log high-risk tools for audit
+  - name: audit_high_risk
+    description: "Log all high-risk tool usage for review"
+    enabled: true
+    priority: 5
+    condition:
+      tool_risk: high
+    action: LOG_AND_PROCEED
+    audit:
+      log_level: warn
+      include_context: true
+
+  # Default: Allow with standard logging
+  - name: default_allow
+    description: "Default policy - allow with logging"
+    enabled: true
+    priority: 999
+    condition:
+      always: true
+    action: ALLOW
+    audit:
+      log_level: info
+      include_context: false
+
+# Action definitions
+actions:
+  HARD_STOP:
+    description: "Immediately block the action, do not proceed"
+    user_visible: true
+    continues_execution: false
+
+  SOFT_STOP:
+    description: "Pause and request user confirmation before proceeding"
+    user_visible: true
+    continues_execution: conditional
+
+  LOG_AND_PROCEED:
+    description: "Log the action for audit but allow execution"
+    user_visible: false
+    continues_execution: true
+
+  ALLOW:
+    description: "Allow the action with standard logging"
+    user_visible: false
+    continues_execution: true
+
+# Condition operators
+condition_schema:
+  operators:
+    - ">": "Greater than (numeric)"
+    - "<": "Less than (numeric)"
+    - ">=": "Greater than or equal"
+    - "<=": "Less than or equal"
+    - "==": "Equals (string or numeric)"
+    - "in": "Value in list"
+    - "not_in": "Value not in list"
+    - "contains": "String contains substring"
+    - "matches": "Regex match"
+
+  combinators:
+    - all: "All conditions must be true (AND)"
+    - any: "Any condition must be true (OR)"
+    - none: "No condition must be true (NOT ANY)"
+
+  fields:
+    drift_score:
+      type: float
+      range: [0.0, 1.0]
+      description: "Semantic drift from stated user goal"
+
+    tool_risk:
+      type: enum
+      values: [low, medium, high, critical]
+      description: "Risk level of the tool being invoked"
+
+    intent_confidence:
+      type: float
+      range: [0.0, 1.0]
+      description: "Classifier confidence in detected intent"
+
+    violation_count:
+      type: integer
+      description: "Number of policy violations in current trajectory"
+
+    turn_number:
+      type: integer
+      description: "Current turn in the conversation"
+
+# Environment-specific overrides
+environments:
+  production:
+    # Stricter thresholds in production
+    overrides:
+      - policy: critical_tool_drift
+        condition:
+          all:
+            - tool_risk: high
+            - drift_score: ">0.3"  # Lower threshold in prod
+
+  staging:
+    # Standard thresholds
+    overrides: []
+
+  development:
+    # Relaxed for testing
+    overrides:
+      - policy: extreme_drift
+        enabled: false
+      - policy: ambiguous_intent
+        action: LOG_AND_PROCEED
+
+# Metrics and monitoring
+metrics:
+  - name: policy_trigger_rate
+    description: "Rate at which each policy is triggered"
+    group_by: [policy_name, action]
+
+  - name: false_positive_estimate
+    description: "Estimated false positive rate (requires labeling)"
+    group_by: [policy_name]
+
+  - name: user_override_rate
+    description: "Rate at which users override SOFT_STOP"
+    group_by: [policy_name]

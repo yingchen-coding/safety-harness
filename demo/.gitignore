@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+.claude/
+
+# Artifacts (keep examples and demo outputs)
+# artifacts/*.json
+# artifacts/*.html
+!artifacts/incident_example.json
+!artifacts/stress_failures.json
+!artifacts/regression_tests.json
+!artifacts/gate_report.html
+!artifacts/alignment_debt.yaml
+
+# OS
+.DS_Store
+Thumbs.db

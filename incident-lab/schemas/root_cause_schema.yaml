@@ -1,0 +1,123 @@
+# Machine-Readable Root Cause Schema
+# ===================================
+#
+# Structured schema for incident root causes that enables:
+# - Automated aggregation across incidents
+# - Technical debt tracking by category
+# - Roadmap prioritization based on frequency
+# - Fix ownership assignment
+
+# Schema version
+schema_version: "1.0"
+
+# Root cause structure
+root_cause:
+  # Required fields
+  incident_id: string        # e.g., "INC_004"
+  category: enum             # From taxonomy below
+  gap: string                # Specific detection/prevention gap
+  layer: enum                # Which safeguard layer failed
+  severity: enum             # Impact severity
+
+  # Ownership and tracking
+  fix_owner: string          # Team responsible for fix
+  jira_ticket: string        # Tracking ticket
+  target_fix_date: date      # When fix is expected
+
+  # Optional context
+  contributing_factors: list # Secondary causes
+  affected_safeguards: list  # Which safeguards were involved
+  detection_missed_at: list  # Which hook points missed it
+
+# Taxonomy of root cause categories
+taxonomy:
+  categories:
+    - name: Injection
+      description: "Hidden instructions bypass input validation"
+      typical_gaps:
+        - "Pre-action classifier FN"
+        - "Tool output not sanitized"
+        - "Data plane attack undetected"
+
+    - name: Policy Erosion
+      description: "Gradual compliance degradation over turns"
+      typical_gaps:
+        - "Drift threshold too high"
+        - "No trajectory-level monitoring"
+        - "Educational framing bypass"
+
+    - name: Tool Hallucination
+      description: "Agent fabricates or misinterprets tool results"
+      typical_gaps:
+        - "Post-action schema validation missing"
+        - "Error propagation failed"
+        - "Timeout handling incorrect"
+
+    - name: Coordinated Misuse
+      description: "Harmful capability emerges from benign pieces"
+      typical_gaps:
+        - "Single-turn intent analysis only"
+        - "No capability accumulation detection"
+        - "Task decomposition undetected"
+
+    - name: Escalation Delay
+      description: "Human review bypassed or delayed"
+      typical_gaps:
+        - "Async review without agent freeze"
+        - "Timeout auto-approval"
+        - "Escalation threshold too high"
+
+  layers:
+    - pre_action    # Before tool/action execution
+    - mid_step      # During multi-turn execution
+    - post_action   # After tool/action completion
+    - escalation    # Human review process
+
+  severities:
+    - critical      # Immediate harm potential
+    - high          # Significant harm potential
+    - medium        # Moderate harm potential
+    - low           # Minor harm potential
+
+# Example incident root cause
+example:
+  incident_id: "INC_004"
+  category: "Coordinated Misuse"
+  gap: "Single-turn intent analysis cannot detect capability accumulation"
+  layer: "mid_step"
+  severity: "critical"
+  fix_owner: "safeguards_team"
+  jira_ticket: "SAFETY-1234"
+  target_fix_date: "2026-03-15"
+  contributing_factors:
+    - "Each subtask individually benign"
+    - "No tool sequence pattern detection"
+  affected_safeguards:
+    - "intent_classifier"
+    - "drift_monitor"
+  detection_missed_at:
+    - "pre_action"
+    - "mid_step"
+
+# Aggregation queries enabled by this schema
+aggregation_examples:
+  - query: "What % of incidents are from each category?"
+    result: |
+      Coordinated Misuse: 35%
+      Policy Erosion: 28%
+      Injection: 20%
+      Tool Hallucination: 12%
+      Escalation Delay: 5%
+
+  - query: "Which layer has the most gaps?"
+    result: |
+      mid_step: 45%
+      pre_action: 30%
+      post_action: 20%
+      escalation: 5%
+
+  - query: "90-day roadmap priority"
+    result: |
+      P0: Fix mid_step trajectory monitoring (35% of incidents)
+      P1: Improve pre_action injection detection (20% of incidents)
+      P2: Add capability accumulation detection (15% of incidents)

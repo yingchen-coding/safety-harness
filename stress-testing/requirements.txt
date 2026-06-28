@@ -1,0 +1,12 @@
+# Core (stdlib only - no external dependencies required)
+
+# Optional: For visualization
+# matplotlib>=3.7.0
+
+# Optional: For real model testing
+# openai>=1.0.0
+# anthropic>=0.18.0
+
+# Optional: For advanced analysis
+# numpy>=1.24.0
+# pandas>=2.0.0

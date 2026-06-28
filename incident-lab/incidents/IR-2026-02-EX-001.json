@@ -1,0 +1,53 @@
+{
+  "incident_id": "IR-2026-02-EX-001",
+  "type": "safety_exception_review",
+  "trigger": "exception_granted",
+
+  "linked_exception": "EX-2026-Q1-001",
+  "exception_details": {
+    "approved_by": "Alice Chen (Head_of_Safety)",
+    "approved_at": "2026-02-01T12:00:00Z",
+    "ttl_days": 7,
+    "expires_at": "2026-02-08T12:00:00Z"
+  },
+
+  "scope": {
+    "repo": "model-safety-regression-suite",
+    "safeguards": [
+      "mid_trajectory.policy_erosion_detector",
+      "trajectory_monitor.intent_drift_guard"
+    ],
+    "constitution_principles": ["C2"]
+  },
+
+  "blast_radius": {
+    "safeguard_count": 2,
+    "principle_count": 1,
+    "entropy_score": 4.0,
+    "max_entropy": 10
+  },
+
+  "review_agenda": [
+    "Confirm monitoring plan is active",
+    "Review any policy erosion alerts since exception granted",
+    "Assess progress on underlying debt resolution",
+    "Decide: renew, modify scope, or revoke exception"
+  ],
+
+  "linked_debts": [
+    "AD-2026-02-C2"
+  ],
+
+  "status": "scheduled",
+  "owner": "Safety_Oncall",
+  "scheduled_for": "2026-02-03T18:00:00Z",
+
+  "attendees": [
+    "Safety_Oncall",
+    "Head_of_Safety",
+    "Safety_Engineering_Lead"
+  ],
+
+  "created_at": "2026-02-01T12:05:00Z",
+  "created_by": "Safety Governance System (auto-generated)"
+}

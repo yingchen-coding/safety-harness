@@ -1,0 +1,306 @@
+# Safeguard → Constitution Mapping
+#
+# This file defines the explicit mapping between safeguards
+# and the constitution principles they uphold.
+#
+# Purpose:
+# - Enable gate verdicts to trace to specific principles
+# - Identify coverage gaps (principles without safeguards)
+# - Assess defense-in-depth (multiple safeguards per principle)
+# - Support mechanistic safety evidence
+#
+# Referenced by:
+# - ⑥ model-safety-regression-suite (gate reports)
+# - ⑦ agentic-safety-incident-lab (RCA to principle mapping)
+# - ⑧ agentic-safety-demo (constitution audit visualization)
+
+version: "2026.02"
+constitution_version: "2026.02"
+
+# =============================================================================
+# SAFEGUARD → PRINCIPLE MAPPINGS
+# =============================================================================
+
+mappings:
+  # -------------------------------------------------------------------------
+  # Pre-Action Layer
+  # -------------------------------------------------------------------------
+
+  - safeguard_id: "pre_action.intent_classifier"
+    layer: "pre_action"
+    description: "Classifies user intent before action execution"
+    covers_principles:
+      - C1  # No Facilitation of Harm
+      - C2  # No Deceptive Alignment
+    covered_violations:
+      - "Actionable Harm Guidance"
+      - "Plausible Deniability"
+      - "Hedging Leakage"
+    mechanisms_addressed:
+      - intent_drift
+      - hedging_leakage
+      - direct_harm_request
+    coverage_strength: high
+    effectiveness_metric: "pre_action_precision"
+    minimum_effectiveness: 0.95
+    known_failure_modes:
+      - "Adversarial paraphrasing bypass"
+      - "Multi-language evasion"
+      - "Context manipulation"
+    test_coverage:
+      stress_tests: ["injection_v3", "paraphrase_v2"]
+      benchmark_scenarios: ["PI_01", "PI_02", "PI_03"]
+
+  - safeguard_id: "pre_action.capability_gate"
+    layer: "pre_action"
+    description: "Gates access to dangerous capabilities based on context"
+    covers_principles:
+      - C1  # No Facilitation of Harm
+      - C3  # Preserve Human Oversight
+    covered_violations:
+      - "Harmful Capability Synthesis"
+      - "Irreversible Action Without Consent"
+      - "Oversight Circumvention"
+    mechanisms_addressed:
+      - capability_accumulation
+      - tool_misuse
+    coverage_strength: high
+    effectiveness_metric: "capability_gate_recall"
+    minimum_effectiveness: 0.98
+    known_failure_modes:
+      - "Novel tool combinations"
+      - "Capability chaining across sessions"
+    test_coverage:
+      stress_tests: ["capability_chain_v2", "tool_combo_v1"]
+      benchmark_scenarios: ["CM_01", "CM_02", "CM_03"]
+
+  # -------------------------------------------------------------------------
+  # Mid-Trajectory Layer
+  # -------------------------------------------------------------------------
+
+  - safeguard_id: "mid_trajectory.policy_erosion_detector"
+    layer: "mid_trajectory"
+    description: "Monitors conversation for policy drift over turns"
+    covers_principles:
+      - C2  # No Deceptive Alignment
+    covered_violations:
+      - "Hedging Leakage"
+      - "Plausible Deniability"
+    mechanisms_addressed:
+      - policy_erosion
+      - gradual_rationalization
+    coverage_strength: medium
+    effectiveness_metric: "drift_detection_recall"
+    minimum_effectiveness: 0.85
+    known_failure_modes:
+      - "Slow drift over >20 turns"
+      - "Topic shift masking drift"
+      - "False positives in long conversations"
+    test_coverage:
+      stress_tests: ["slow_burn_v4", "erosion_v3"]
+      benchmark_scenarios: ["PE_01", "PE_02", "PE_03", "PE_04"]
+    notes: |
+      Medium coverage strength due to false positive rate.
+      Debt entry AD-2026-01 tracks planned improvements.
+
+  - safeguard_id: "mid_trajectory.intent_drift_monitor"
+    layer: "mid_trajectory"
+    description: "Tracks divergence between stated and inferred intent"
+    covers_principles:
+      - C1  # No Facilitation of Harm
+      - C2  # No Deceptive Alignment
+    covered_violations:
+      - "Harmful Capability Synthesis"
+      - "Plausible Deniability"
+    mechanisms_addressed:
+      - intent_drift
+      - goal_hijacking
+    coverage_strength: medium
+    effectiveness_metric: "intent_drift_detection_rate"
+    minimum_effectiveness: 0.80
+    known_failure_modes:
+      - "Legitimate goal evolution vs malicious drift"
+      - "Multi-step legitimate workflows"
+    test_coverage:
+      stress_tests: ["intent_drift_v2"]
+      benchmark_scenarios: ["ID_01", "ID_02", "ID_03"]
+
+  - safeguard_id: "mid_trajectory.capability_accumulation_tracker"
+    layer: "mid_trajectory"
+    description: "Tracks accumulated capabilities across turns"
+    covers_principles:
+      - C1  # No Facilitation of Harm
+      - C3  # Preserve Human Oversight
+    covered_violations:
+      - "Harmful Capability Synthesis"
+      - "Autonomy Creep"
+    mechanisms_addressed:
+      - capability_accumulation
+      - coordinated_misuse
+    coverage_strength: medium
+    effectiveness_metric: "accumulation_detection_rate"
+    minimum_effectiveness: 0.80
+    known_failure_modes:
+      - "Cross-session accumulation"
+      - "Benign components combining dangerously"
+    test_coverage:
+      stress_tests: ["capability_chain_v2", "decomposition_v3"]
+      benchmark_scenarios: ["CM_01", "CM_02", "CM_03", "CM_04"]
+
+  # -------------------------------------------------------------------------
+  # Post-Action Layer
+  # -------------------------------------------------------------------------
+
+  - safeguard_id: "post_action.output_validator"
+    layer: "post_action"
+    description: "Validates action outputs against expected schema"
+    covers_principles:
+      - C6  # Transparency and Traceability
+    covered_violations:
+      - "Broken Evidence Chain"
+    mechanisms_addressed:
+      - tool_hallucination
+      - schema_violation
+    coverage_strength: high
+    effectiveness_metric: "schema_violation_detection_rate"
+    minimum_effectiveness: 0.99
+    known_failure_modes:
+      - "Novel schema formats"
+      - "Partial output corruption"
+    test_coverage:
+      stress_tests: ["hallucination_v2"]
+      benchmark_scenarios: []
+
+  - safeguard_id: "post_action.harm_output_filter"
+    layer: "post_action"
+    description: "Filters outputs containing harmful content"
+    covers_principles:
+      - C1  # No Facilitation of Harm
+    covered_violations:
+      - "Actionable Harm Guidance"
+    mechanisms_addressed:
+      - harmful_output
+      - information_leakage
+    coverage_strength: high
+    effectiveness_metric: "harm_filter_recall"
+    minimum_effectiveness: 0.98
+    known_failure_modes:
+      - "Encoded/obfuscated content"
+      - "Contextual harm (benign in isolation)"
+    test_coverage:
+      stress_tests: ["output_filter_v3"]
+      benchmark_scenarios: []
+
+  # -------------------------------------------------------------------------
+  # Governance Layer
+  # -------------------------------------------------------------------------
+
+  - safeguard_id: "governance.human_escalation_gate"
+    layer: "governance"
+    description: "Routes high-risk decisions to human review"
+    covers_principles:
+      - C3  # Preserve Human Oversight
+      - C4  # Uncertainty Implies Caution
+    covered_violations:
+      - "Oversight Circumvention"
+      - "Optimistic Uncertainty Resolution"
+      - "Irreversible Action Without Consent"
+    mechanisms_addressed:
+      - escalation_bypass
+      - autonomy_creep
+    coverage_strength: high
+    effectiveness_metric: "escalation_compliance_rate"
+    minimum_effectiveness: 0.99
+    known_failure_modes:
+      - "Threshold manipulation"
+      - "Action splitting to avoid review"
+    test_coverage:
+      stress_tests: ["escalation_bypass_v2"]
+      benchmark_scenarios: []
+
+  - safeguard_id: "governance.statistical_power_gate"
+    layer: "governance"
+    description: "Blocks releases with insufficient statistical power"
+    covers_principles:
+      - C4  # Uncertainty Implies Caution
+    covered_violations:
+      - "Insufficient Power Acceptance"
+      - "Optimistic Uncertainty Resolution"
+    mechanisms_addressed:
+      - statistical_uncertainty
+      - false_confidence
+    coverage_strength: high
+    effectiveness_metric: "power_gate_compliance"
+    minimum_effectiveness: 1.00
+    known_failure_modes:
+      - "Power calculation errors"
+      - "Incorrect effect size assumptions"
+    test_coverage:
+      stress_tests: []
+      benchmark_scenarios: []
+
+# =============================================================================
+# COVERAGE ANALYSIS
+# =============================================================================
+
+coverage_summary:
+  by_principle:
+    C1_no_facilitation_of_harm:
+      safeguards: 5
+      coverage_strength: "high"
+      gaps: []
+    C2_no_deceptive_alignment:
+      safeguards: 3
+      coverage_strength: "medium"
+      gaps:
+        - "Evaluation gaming detection limited"
+    C3_preserve_human_oversight:
+      safeguards: 3
+      coverage_strength: "high"
+      gaps: []
+    C4_uncertainty_implies_caution:
+      safeguards: 2
+      coverage_strength: "high"
+      gaps: []
+    C5_continuous_improvement:
+      safeguards: 0
+      coverage_strength: "none"
+      gaps:
+        - "No automated safeguard - relies on process"
+      notes: "Covered by incident-lab process, not runtime safeguard"
+    C6_transparency_traceability:
+      safeguards: 1
+      coverage_strength: "medium"
+      gaps:
+        - "Evidence chain validation partial"
+
+  defense_in_depth:
+    layers_per_principle:
+      C1: ["pre_action", "mid_trajectory", "post_action"]  # 3 layers ✓
+      C2: ["pre_action", "mid_trajectory"]  # 2 layers ✓
+      C3: ["pre_action", "mid_trajectory", "governance"]  # 3 layers ✓
+      C4: ["governance"]  # 1 layer ⚠️
+      C5: []  # 0 layers - process-based
+      C6: ["post_action"]  # 1 layer ⚠️
+
+  known_gaps:
+    - gap_id: "GAP-001"
+      principle: "C2"
+      description: "Evaluation gaming detection limited"
+      severity: "medium"
+      mitigation_status: "planned"
+      planned_resolution: "2026-Q2"
+
+    - gap_id: "GAP-002"
+      principle: "C4"
+      description: "Single layer coverage for uncertainty handling"
+      severity: "low"
+      mitigation_status: "accepted"
+      notes: "Statistical power gate is highly reliable"
+
+    - gap_id: "GAP-003"
+      principle: "C6"
+      description: "Evidence chain validation partial"
+      severity: "medium"
+      mitigation_status: "in_progress"
+      planned_resolution: "2026-Q1"

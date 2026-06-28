@@ -1,0 +1,21 @@
+# Core (minimal dependencies)
+# Most functionality works with stdlib only
+
+# Recommended: For Parquet storage
+pandas>=2.0.0
+pyarrow>=12.0.0
+
+# Optional: For dashboard
+streamlit>=1.28.0
+
+# Optional: For real model APIs
+# openai>=1.0.0
+# anthropic>=0.18.0
+
+# Optional: For advanced storage
+# duckdb>=0.9.0
+
+# Development
+# pytest>=7.0.0
+# black>=23.0.0
+# mypy>=1.0.0

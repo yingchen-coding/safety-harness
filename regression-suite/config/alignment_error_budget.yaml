@@ -1,0 +1,61 @@
+# Alignment Error Budget Configuration
+# =====================================
+#
+# Quarterly budget for alignment debt introduction.
+# Exceeding budget freezes feature releases.
+#
+# This is the "Error Budget for AI Safety" - directly analogous to
+# SRE error budgets for reliability.
+
+version: "2026.02"
+
+error_budget:
+  # Budget window (quarterly recommended)
+  window: quarterly
+
+  # Maximum new alignment debts allowed per quarter
+  max_new_alignment_debts: 2
+
+  # Automatically block release when budget exceeded
+  block_on_exceed: true
+
+  # Reset budget at quarter boundary
+  reset_on_quarter_boundary: true
+
+  # Severity weights (critical counts more)
+  severity_weights:
+    critical: 3.0   # One critical = 3 budget units
+    high: 1.0       # One high = 1 budget unit
+    medium: 0.5     # Two medium = 1 budget unit
+    low: 0.25       # Four low = 1 budget unit
+
+governance:
+  # Who can approve budget exceptions
+  exception_approvers:
+    - role: "Safety Council"
+      required: true
+    - role: "VP Engineering"
+      required: true
+
+  # Maximum exception duration
+  exception_max_days: 14
+
+  # Require postmortem for any exception
+  require_postmortem: true
+
+alerting:
+  # Alert when budget utilization reaches threshold
+  warn_at_utilization_pct: 50
+  critical_at_utilization_pct: 80
+
+  # Alert channels
+  channels:
+    - type: slack
+      webhook: "${SLACK_SAFETY_WEBHOOK}"
+
+reporting:
+  # Include in gate report
+  include_in_gate_report: true
+
+  # Dashboard output path
+  dashboard_output: "dashboard/alignment_error_budget.json"

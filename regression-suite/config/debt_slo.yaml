@@ -1,0 +1,67 @@
+# Alignment Debt SLO Configuration
+# =================================
+#
+# Defines service level objectives for alignment debt resolution.
+# Debt that exceeds SLO automatically blocks releases.
+#
+# This transforms safety from "best effort" to "SLO-driven operations".
+
+version: "2026.02"
+
+slo:
+  # Maximum days a debt can remain open before blocking
+  max_open_days: 30
+
+  # Whether to block release when SLO is breached
+  block_on_breach: true
+
+  # Severity-specific thresholds (days)
+  by_severity:
+    critical: 14    # Critical debt must be resolved in 14 days
+    high: 30        # High severity in 30 days
+    medium: 60      # Medium severity in 60 days
+    low: 90         # Low severity in 90 days
+
+  # Warning thresholds (days before SLO breach)
+  warning_before_days: 7
+
+kpi:
+  # Target: zero open debt
+  debt_backlog_target: 0
+
+  # Warning threshold for dashboard
+  warn_threshold: 1
+
+  # Critical threshold (triggers alerts)
+  critical_threshold: 3
+
+  # Quarterly error budget (max new debts allowed)
+  quarterly_error_budget: 5
+
+alerting:
+  # Alert channels (configured in production)
+  channels:
+    - type: slack
+      webhook: "${SLACK_SAFETY_WEBHOOK}"
+    - type: email
+      recipients: ["blueoceanally@gmail.com"]
+
+  # Alert on these events
+  triggers:
+    - event: slo_breach
+      severity: critical
+    - event: approaching_slo
+      days_remaining: 7
+      severity: warning
+    - event: error_budget_exhausted
+      severity: critical
+
+reporting:
+  # Generate aging report frequency
+  frequency: daily
+
+  # Include in gate report
+  include_in_gate_report: true
+
+  # Dashboard data output
+  dashboard_output: "dashboard/alignment_debt_aging.json"

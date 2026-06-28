@@ -1,0 +1,88 @@
+# Safety Policy Configuration
+# ===========================
+#
+# Declarative rules for safeguard decisions.
+# Modify this file to adjust safety thresholds without code changes.
+#
+# Rule format:
+#   - name: unique identifier
+#     when: condition expression
+#     action: PROCEED | SOFT_STOP | HARD_STOP | HUMAN_REVIEW
+#     reason: explanation string
+#     priority: higher = evaluated first (default 0)
+
+rules:
+  # High-priority blocking rules
+  - name: violation_immediate_block
+    when: violation_count > 0
+    action: HARD_STOP
+    reason: "Policy violation detected - blocking immediately"
+    priority: 100
+
+  - name: high_drift_block
+    when: drift_score > 0.5
+    action: HARD_STOP
+    reason: "Trajectory drift exceeds safety threshold"
+    priority: 50
+
+  # Warning rules
+  - name: moderate_drift_warn
+    when: drift_score > 0.3
+    action: SOFT_STOP
+    reason: "Trajectory drift approaching threshold - requesting clarification"
+    priority: 30
+
+  - name: high_risk_tool_confirm
+    when: tool_risk == 'high'
+    action: SOFT_STOP
+    reason: "High-risk tool usage requires explicit confirmation"
+    priority: 40
+
+  - name: low_confidence_clarify
+    when: confidence < 0.6
+    action: SOFT_STOP
+    reason: "Low confidence in intent classification - asking for clarification"
+    priority: 20
+
+  # Human escalation
+  - name: ambiguous_high_drift
+    when: drift_score > 0.4 and confidence < 0.7
+    action: HUMAN_REVIEW
+    reason: "Ambiguous situation with elevated drift - escalating to human review"
+    priority: 45
+
+# Threshold configuration
+thresholds:
+  drift:
+    warn: 0.3
+    block: 0.5
+  confidence:
+    low: 0.6
+  tool_risk:
+    levels: ["low", "medium", "high"]
+
+# Hook configuration
+hooks:
+  pre_action:
+    enabled: true
+    timeout_ms: 100
+  mid_step:
+    enabled: true
+    frequency: every_step  # or 'on_signal'
+    timeout_ms: 80
+  post_action:
+    enabled: true
+    async: false  # set true for non-blocking
+    timeout_ms: 60
+
+# Escalation configuration
+escalation:
+  soft_stop:
+    max_retries: 2
+    escalate_after_retries: true
+  hard_stop:
+    notify_operator: true
+    log_full_trajectory: true
+  human_review:
+    timeout_minutes: 5
+    freeze_agent: true

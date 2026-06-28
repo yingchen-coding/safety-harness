@@ -1,0 +1,42 @@
+# Demo attack configuration for stress testing
+
+demo:
+  name: stress_test_demo
+  description: |
+    Demo configuration for comparing static vs adaptive red-teaming.
+    Runs a fixed number of rollouts with both attack modes.
+
+static_config:
+  mode: static
+  rollouts: 100
+  template_bank: templates/attack_bank_v1.yaml
+  sampling: random
+  mutation: false
+
+adaptive_config:
+  mode: adaptive
+  rollouts: 100
+  learning_rate: 0.1
+  exploration_rate: 0.3
+  mutation:
+    enabled: true
+    rate: 0.2
+    operators:
+      - paraphrase
+      - decompose
+      - reframe
+
+target:
+  safeguard_strength: 0.5
+  max_turns: 8
+
+analysis:
+  compute_erosion: true
+  compare_modes: true
+  statistical_test: chi_square
+  significance_level: 0.05
+
+output:
+  results_dir: results/demo/
+  save_rollouts: true
+  generate_charts: true

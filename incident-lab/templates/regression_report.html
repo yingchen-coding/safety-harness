@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Safety Regression Report</title>
+    <style>
+        :root {
+            --bg: #0d1117;
+            --card: #161b22;
+            --border: #30363d;
+            --text: #c9d1d9;
+            --text-muted: #8b949e;
+            --green: #238636;
+            --yellow: #d29922;
+            --red: #da3633;
+            --blue: #58a6ff;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 2rem;
+        }
+        .container { max-width: 1200px; margin: 0 auto; }
+        h1 { font-size: 1.75rem; margin-bottom: 0.5rem; }
+        .subtitle { color: var(--text-muted); margin-bottom: 2rem; }
+
+        /* Verdict Banner */
+        .verdict-banner {
+            padding: 1.5rem 2rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .verdict-banner.ok { background: rgba(35, 134, 54, 0.15); border: 1px solid var(--green); }
+        .verdict-banner.warn { background: rgba(210, 153, 34, 0.15); border: 1px solid var(--yellow); }
+        .verdict-banner.block { background: rgba(218, 54, 51, 0.15); border: 1px solid var(--red); }
+        .verdict-icon { font-size: 2.5rem; }
+        .verdict-text h2 { font-size: 1.5rem; }
+        .verdict-text p { color: var(--text-muted); }
+
+        /* Metrics Grid */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .metric-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.25rem;
+        }
+        .metric-label { color: var(--text-muted); font-size: 0.875rem; }
+        .metric-value { font-size: 1.75rem; font-weight: 600; margin-top: 0.25rem; }
+        .metric-value.danger { color: var(--red); }
+        .metric-value.warning { color: var(--yellow); }
+        .metric-value.safe { color: var(--green); }
+
+        /* Category Table */
+        .section { margin-bottom: 2rem; }
+        .section h3 { margin-bottom: 1rem; font-size: 1.125rem; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--card);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        th, td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        th { background: rgba(255,255,255,0.05); color: var(--text-muted); font-weight: 500; }
+        tr:last-child td { border-bottom: none; }
+        .delta-up { color: var(--red); }
+        .delta-down { color: var(--green); }
+        .delta-neutral { color: var(--text-muted); }
+
+        /* Incident List */
+        .incident-list { list-style: none; }
+        .incident-item {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem 1.25rem;
+            margin-bottom: 0.75rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .incident-id { font-family: monospace; color: var(--blue); }
+        .incident-type { color: var(--text-muted); font-size: 0.875rem; }
+        .severity-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        .severity-critical { background: var(--red); color: white; }
+        .severity-high { background: var(--yellow); color: black; }
+        .severity-medium { background: var(--border); color: var(--text); }
+
+        /* Footer */
+        .footer {
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+            font-size: 0.875rem;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Safety Regression Report</h1>
+        <p class="subtitle">Model: {{MODEL_VERSION}} | Baseline: {{BASELINE_VERSION}} | Generated: {{TIMESTAMP}}</p>
+
+        <!-- Verdict Banner -->
+        <div class="verdict-banner {{VERDICT_CLASS}}">
+            <span class="verdict-icon">{{VERDICT_ICON}}</span>
+            <div class="verdict-text">
+                <h2>{{VERDICT}}</h2>
+                <p>{{VERDICT_MESSAGE}}</p>
+            </div>
+        </div>
+
+        <!-- Key Metrics -->
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-label">Policy Erosion Delta</div>
+                <div class="metric-value {{EROSION_CLASS}}">{{EROSION_DELTA}}</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Delayed Failure Rate</div>
+                <div class="metric-value {{DELAYED_CLASS}}">{{DELAYED_RATE}}</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Incidents Analyzed</div>
+                <div class="metric-value">{{INCIDENT_COUNT}}</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Regression Cases</div>
+                <div class="metric-value">{{REGRESSION_COUNT}}</div>
+            </div>
+        </div>
+
+        <!-- Category Breakdown -->
+        <div class="section">
+            <h3>Category Breakdown</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Baseline</th>
+                        <th>Candidate</th>
+                        <th>Delta</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{CATEGORY_ROWS}}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Recent Incidents -->
+        <div class="section">
+            <h3>Incidents Driving This Report</h3>
+            <ul class="incident-list">
+                {{INCIDENT_ITEMS}}
+            </ul>
+        </div>
+
+        <!-- Recommendations -->
+        <div class="section">
+            <h3>Recommendations</h3>
+            <ul style="margin-left: 1.5rem; color: var(--text-muted);">
+                {{RECOMMENDATIONS}}
+            </ul>
+        </div>
+
+        <div class="footer">
+            Generated by agentic-safety-incident-lab | For internal use only | Non-commercial
+        </div>
+    </div>
+</body>
+</html>

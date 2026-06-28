@@ -1,0 +1,321 @@
+# Alignment Debt Ledger
+#
+# This ledger tracks accumulated alignment debt across releases.
+# Debt represents temporary deviations from ideal safety state that
+# must be repaid to maintain long-term alignment.
+#
+# Purpose:
+# - Track accumulated safety liability
+# - Ensure debt doesn't compound indefinitely
+# - Assign ownership and deadlines for resolution
+# - Block releases when debt exceeds thresholds
+#
+# Philosophy:
+# - Debt is sometimes necessary for business reasons
+# - But debt must be explicit, owned, and time-bounded
+# - Unaddressed debt accumulates and eventually blocks
+
+version: "2026.02"
+last_updated: "2026-02-01T00:00:00Z"
+
+# =============================================================================
+# DEBT SUMMARY
+# =============================================================================
+
+summary:
+  total_active_debt: 0.12
+  debt_status: "WARN"  # OK < 0.10, WARN < 0.25, BLOCK < 0.50, CRITICAL >= 0.50
+  oldest_unresolved_debt: "AD-2026-01"
+  oldest_debt_age_days: 32
+
+  by_category:
+    coverage_gap: 0.03
+    principle_violation: 0.05
+    risk_acceptance: 0.04
+    stale_safeguard: 0.00
+
+  by_principle:
+    C1: 0.02
+    C2: 0.07
+    C3: 0.00
+    C4: 0.02
+    C5: 0.01
+    C6: 0.00
+
+  trend:
+    period: "30 days"
+    debt_added: 0.05
+    debt_resolved: 0.03
+    net_change: 0.02
+    direction: "increasing"
+
+# =============================================================================
+# DEBT ENTRIES
+# =============================================================================
+
+ledger:
+  # -------------------------------------------------------------------------
+  # Active Debt
+  # -------------------------------------------------------------------------
+
+  - debt_id: AD-2026-01
+    status: active
+    created_at: "2026-01-01T00:00:00Z"
+    introduced_by_release: "v2.3.0"
+
+    # What principle is violated
+    principle: C2
+    violation_type: "coverage_gap"
+    description: >
+      Policy erosion detector has medium coverage strength.
+      Slow drift over >20 turns not reliably detected.
+      False positive rate exceeds target (12% vs 5% target).
+
+    # Mechanism gap
+    mechanism_gap: "policy_erosion"
+    affected_failure_modes:
+      - "Slow burn attacks over extended conversations"
+      - "Topic shift masking policy drift"
+
+    # Risk assessment
+    severity: high
+    debt_amount: 0.05
+    business_impact: >
+      Potential for gradual policy erosion in long conversations.
+      Estimated 5-10% of production conversations exceed 20 turns.
+
+    # Temporary mitigation
+    temporary_exceptions:
+      - safeguard_id: "mid_trajectory.policy_erosion_detector"
+        exception_type: "reduced_threshold"
+        original_threshold: 0.85
+        current_threshold: 0.70
+        reason: "False positive rate too high at 0.85"
+        monitoring: "Daily review of flagged conversations"
+
+    # Resolution plan
+    mitigation_status: partial
+    planned_resolution:
+      owner: "Safety Engineering"
+      owner_email: "safety-eng@company.com"
+      eta: "2026-03-15"
+      approach: >
+        1. Retrain erosion detector with expanded dataset
+        2. Add turn-count-aware threshold scaling
+        3. Implement topic-shift detection preprocessing
+      milestones:
+        - date: "2026-02-15"
+          milestone: "New training data collected"
+        - date: "2026-03-01"
+          milestone: "Retrained model in staging"
+        - date: "2026-03-15"
+          milestone: "Production deployment"
+
+    # Risk acceptance (if any)
+    risk_acceptance:
+      approved_by: "Safety Council"
+      approved_at: "2026-01-15T00:00:00Z"
+      expires: "2026-04-01"
+      conditions:
+        - "Daily monitoring of long conversations"
+        - "Weekly review of false positives"
+        - "Immediate escalation if policy erosion incident occurs"
+
+    # Does this block release?
+    blocks_release: false
+
+  - debt_id: AD-2026-02
+    status: active
+    created_at: "2026-01-20T00:00:00Z"
+    introduced_by_release: "v2.4.0"
+
+    principle: C4
+    violation_type: "principle_violation"
+    description: >
+      Statistical power gate was overridden for release v2.4.0.
+      Power was 0.72 (below 0.80 threshold) for coordinated misuse scenarios.
+      Release proceeded with explicit risk acceptance.
+
+    mechanism_gap: "statistical_uncertainty"
+    affected_failure_modes:
+      - "Undetected regression in coordinated misuse detection"
+
+    severity: high
+    debt_amount: 0.05
+    business_impact: >
+      Potential for coordinated misuse regression going undetected.
+      Additional 500 evaluation scenarios needed to achieve power.
+
+    temporary_exceptions: []
+
+    mitigation_status: in_progress
+    planned_resolution:
+      owner: "Evaluation Infrastructure"
+      owner_email: "eval-infra@company.com"
+      eta: "2026-02-28"
+      approach: >
+        1. Generate additional coordinated misuse scenarios
+        2. Re-run evaluation with expanded scenario set
+        3. Confirm no regression with adequate power
+      milestones:
+        - date: "2026-02-15"
+          milestone: "Additional scenarios generated"
+        - date: "2026-02-28"
+          milestone: "Re-evaluation complete"
+
+    risk_acceptance:
+      approved_by: "Safety Lead"
+      approved_at: "2026-01-20T00:00:00Z"
+      expires: "2026-03-01"
+      conditions:
+        - "Enhanced production monitoring for coordinated misuse patterns"
+        - "Immediate rollback trigger if incident occurs"
+
+    blocks_release: false
+
+  - debt_id: AD-2026-03
+    status: active
+    created_at: "2026-01-25T00:00:00Z"
+    introduced_by_release: "v2.4.1"
+
+    principle: C2
+    violation_type: "coverage_gap"
+    description: >
+      Evaluation gaming detection is limited.
+      No safeguard explicitly detects model behavior differences
+      between evaluation and deployment contexts.
+
+    mechanism_gap: "evaluation_gaming"
+    affected_failure_modes:
+      - "Model behaving more cautiously during known benchmarks"
+      - "Benchmark pattern recognition"
+
+    severity: medium
+    debt_amount: 0.02
+    business_impact: >
+      Safety metrics may not reflect true production behavior.
+      Unknown magnitude of evaluation vs deployment gap.
+
+    temporary_exceptions: []
+
+    mitigation_status: planned
+    planned_resolution:
+      owner: "Safety Research"
+      owner_email: "safety-research@company.com"
+      eta: "2026-Q2"
+      approach: >
+        Research project to develop evaluation gaming detection.
+        No immediate production fix available.
+
+    risk_acceptance:
+      approved_by: "VP Engineering"
+      approved_at: "2026-01-25T00:00:00Z"
+      expires: "2026-07-01"
+      conditions:
+        - "Production traffic sampling for behavior comparison"
+        - "Quarterly review of evaluation vs production metrics"
+
+    blocks_release: false
+
+  # -------------------------------------------------------------------------
+  # Resolved Debt (Historical)
+  # -------------------------------------------------------------------------
+
+  - debt_id: AD-2025-12
+    status: resolved
+    created_at: "2025-12-01T00:00:00Z"
+    resolved_at: "2026-01-10T00:00:00Z"
+    introduced_by_release: "v2.2.0"
+
+    principle: C1
+    violation_type: "coverage_gap"
+    description: >
+      Cross-tool attack chaining not detected by capability gate.
+      Novel tool combinations could synthesize harmful capabilities.
+
+    severity: critical
+    debt_amount: 0.10  # Was 0.10, now 0.00
+
+    resolution:
+      method: "Safeguard enhancement"
+      details: >
+        Added tool combination analysis to capability_gate.
+        Implemented cross-tool risk scoring.
+        Deployed in v2.3.0.
+      evidence:
+        - "stress_tests/capability_chain_v2 passing"
+        - "Production monitoring showing no incidents"
+
+    blocks_release: false  # Was true until resolved
+
+  - debt_id: AD-2025-11
+    status: resolved
+    created_at: "2025-11-15T00:00:00Z"
+    resolved_at: "2025-12-20T00:00:00Z"
+    introduced_by_release: "v2.1.0"
+
+    principle: C6
+    violation_type: "principle_violation"
+    description: >
+      Evidence lineage incomplete for some evaluation runs.
+      Missing hash verification for stress test results.
+
+    severity: medium
+    debt_amount: 0.02  # Was 0.02, now 0.00
+
+    resolution:
+      method: "Infrastructure fix"
+      details: >
+        Added mandatory lineage fields to all evaluation outputs.
+        Implemented hash verification in gate pipeline.
+      evidence:
+        - "All evaluation runs now include complete lineage"
+        - "Audit package generation verified"
+
+    blocks_release: false
+
+# =============================================================================
+# BLOCKING DEBT
+# =============================================================================
+
+blocking_debt:
+  # Debt entries that would block release if not resolved
+  critical_debt: []
+
+  # Debt that would block if threshold exceeded
+  debt_approaching_block:
+    - debt_id: AD-2026-01
+      current_debt: 0.05
+      threshold: 0.25
+      projected_breach: "Never at current rate"
+    - debt_id: AD-2026-02
+      current_debt: 0.05
+      threshold: 0.25
+      projected_breach: "Never at current rate"
+
+# =============================================================================
+# DEBT REDUCTION PLAN
+# =============================================================================
+
+reduction_plan:
+  target_debt: 0.05
+  target_date: "2026-06-01"
+
+  planned_reductions:
+    - debt_id: AD-2026-01
+      expected_reduction: 0.05
+      expected_date: "2026-03-15"
+    - debt_id: AD-2026-02
+      expected_reduction: 0.05
+      expected_date: "2026-02-28"
+    - debt_id: AD-2026-03
+      expected_reduction: 0.02
+      expected_date: "2026-06-30"
+
+  quarterly_targets:
+    - quarter: "2026-Q1"
+      target_debt: 0.10
+      planned_resolutions: ["AD-2026-02"]
+    - quarter: "2026-Q2"
+      target_debt: 0.05
+      planned_resolutions: ["AD-2026-01", "AD-2026-03"]

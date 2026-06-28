@@ -1,0 +1,82 @@
+# Safety Exception Authority Configuration
+# =========================================
+#
+# Defines who can approve safety exceptions to bypass release freezes.
+# This enforces separation of decision power from delivery pressure.
+#
+# Design Principles (Anthropic-style governance):
+# 1. Decision authority separate from delivery responsibility
+# 2. Interested parties cannot self-approve
+# 3. All exceptions time-limited with audit trail
+# 4. Escalation path clearly defined
+
+version: "2026.02"
+
+exception_authority:
+  # Roles authorized to approve safety exceptions
+  approvers:
+    - role: Head_of_Safety
+      can_approve: true
+      max_ttl_days: 30
+      scope: ["alignment_error_budget", "debt_slo", "constitution_violation"]
+
+    - role: Safety_Director
+      can_approve: true
+      max_ttl_days: 14
+      scope: ["alignment_error_budget", "debt_slo"]
+
+    - role: Oncall_Safety_Manager
+      can_approve: true
+      max_ttl_days: 7
+      scope: ["debt_slo"]
+      requires_escalation_within_days: 3
+
+  # Roles explicitly forbidden from approving exceptions
+  # (conflict of interest - delivery responsibility)
+  forbidden_roles:
+    - Product_Manager
+    - Feature_Owner
+    - Engineering_Manager
+    - Infra_Engineer
+    - Release_Manager
+
+  # Escalation path when exception is requested
+  escalation_chain:
+    - level: 1
+      role: Oncall_Safety_Manager
+      response_sla_hours: 4
+
+    - level: 2
+      role: Safety_Director
+      response_sla_hours: 24
+
+    - level: 3
+      role: Head_of_Safety
+      response_sla_hours: 48
+
+exception_rules:
+  # Maximum consecutive renewals before mandatory review
+  max_consecutive_renewals: 2
+
+  # Require incident review meeting after N days
+  require_incident_review_after_days: 14
+
+  # Exceptions cannot span quarters
+  cross_quarter_allowed: false
+
+  # Require postmortem for any exception > 7 days
+  require_postmortem_after_days: 7
+
+  # Auto-create tracking ticket
+  auto_create_ticket: true
+  ticket_prefix: "SAFETY-EXC"
+
+audit:
+  # All exceptions logged to this file
+  log_path: "artifacts/exception_audit.jsonl"
+
+  # Include in gate report
+  include_in_gate_report: true
+
+  # Retain exception records for compliance
+  retention_years: 7

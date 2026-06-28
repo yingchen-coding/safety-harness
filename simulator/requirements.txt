@@ -1,0 +1,9 @@
+# Core dependencies (minimal - uses only stdlib)
+# No external dependencies required for basic operation
+
+# Optional: For visualization
+# matplotlib>=3.7.0
+
+# Optional: For advanced analysis
+# numpy>=1.24.0
+# pandas>=2.0.0

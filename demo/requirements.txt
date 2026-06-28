@@ -1,0 +1,10 @@
+# Agentic Safety Demo - Requirements
+# Core dependencies only - individual repo dependencies not included
+
+# No external dependencies required for demo
+# All scripts use Python standard library only
+
+# Optional: For enhanced functionality
+# numpy>=1.21.0
+# scipy>=1.7.0
+# matplotlib>=3.4.0

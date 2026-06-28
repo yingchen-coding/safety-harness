@@ -1,0 +1,128 @@
+# Performance Budget Configuration
+#
+# Defines latency and resource budgets for each safeguard layer.
+# Exceeding budget triggers automatic degradation or alerts.
+
+version: "1.0"
+
+# Overall request budget
+total_budget:
+  max_latency_ms: 500       # Total safeguard overhead
+  max_memory_mb: 256        # Peak memory for safeguard evaluation
+  max_tokens: 1000          # Max tokens for any safeguard prompt
+
+# Per-layer budgets
+layers:
+  pre_action:
+    description: "Intent classification and injection detection"
+    budget:
+      max_latency_ms: 100
+      max_memory_mb: 64
+      target_latency_p99_ms: 80
+    degradation:
+      on_timeout: "warn_and_proceed"   # Don't block on pre_action timeout
+      on_error: "log_and_proceed"
+      fallback_policy: "allow_with_flag"
+    priority: 1  # Evaluated first
+
+  mid_trajectory:
+    description: "Drift detection and trajectory monitoring"
+    budget:
+      max_latency_ms: 200
+      max_memory_mb: 128
+      target_latency_p99_ms: 150
+    degradation:
+      on_timeout: "block_and_alert"    # Mid-trajectory is critical
+      on_error: "block_and_alert"
+      fallback_policy: "conservative_block"
+    priority: 2
+
+  post_action:
+    description: "Output validation and audit logging"
+    budget:
+      max_latency_ms: 150
+      max_memory_mb: 64
+      target_latency_p99_ms: 100
+    degradation:
+      on_timeout: "log_and_proceed"    # Post-action is observational
+      on_error: "log_and_proceed"
+      fallback_policy: "allow_without_audit"
+    priority: 3
+
+# Degradation policies
+degradation_policies:
+  warn_and_proceed:
+    action: "allow"
+    logging: "elevated"
+    alert: false
+    metrics_tag: "degraded_pre_action"
+
+  log_and_proceed:
+    action: "allow"
+    logging: "standard"
+    alert: false
+    metrics_tag: "error_recovery"
+
+  block_and_alert:
+    action: "block"
+    logging: "elevated"
+    alert: true
+    alert_channel: "oncall"
+    metrics_tag: "degraded_block"
+
+  conservative_block:
+    action: "block"
+    logging: "elevated"
+    alert: true
+    response_to_user: "Unable to process request safely. Please try again."
+    metrics_tag: "conservative_fallback"
+
+  allow_with_flag:
+    action: "allow"
+    logging: "elevated"
+    flag_for_review: true
+    metrics_tag: "flagged_allow"
+
+  allow_without_audit:
+    action: "allow"
+    logging: "best_effort"
+    alert: false
+    audit_backfill: true
+    metrics_tag: "audit_gap"
+
+# SLOs (Service Level Objectives)
+slos:
+  availability:
+    target: 0.999           # 99.9% of requests processed within budget
+    measurement_window: "1h"
+
+  latency:
+    p50_ms: 150
+    p95_ms: 300
+    p99_ms: 450
+
+  error_rate:
+    target: 0.001           # < 0.1% errors
+    exclude_degradations: true
+
+# Alerting thresholds
+alerts:
+  budget_exceeded:
+    threshold_percent: 90   # Alert when at 90% of budget
+    window: "5m"
+    severity: "warning"
+
+  degradation_spike:
+    threshold_count: 10     # Alert on 10 degradations in window
+    window: "1m"
+    severity: "high"
+
+  slo_breach:
+    severity: "critical"
+    page_oncall: true
+
+# Cost tracking (for cloud deployments)
+cost_budget:
+  max_cost_per_request_usd: 0.001
+  monthly_budget_usd: 10000
+  alert_at_percent: 80

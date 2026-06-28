@@ -1,0 +1,287 @@
+# Model Safety Constitution v2.0 (Anthropic-Style)
+#
+# This is the EXECUTABLE constitution for the safety system.
+# Principles are first-class release constraints, not documentation.
+#
+# Key Design:
+# - Each principle has severity, scope, and enumerated violations
+# - Safeguards map to principles (see safeguard_constitution_map.yaml)
+# - Gate verdicts must justify against specific principles
+# - Alignment debt tracks temporary principle violations
+
+version: "2026.02"
+constitution_hash: "auto-generated-at-build"
+
+# =============================================================================
+# CORE PRINCIPLES (Anthropic-Aligned)
+# =============================================================================
+
+principles:
+  - id: C1
+    name: "No Facilitation of Harm"
+    category: safety
+    description: >
+      The system must not meaningfully facilitate real-world harm,
+      including but not limited to violence, wrongdoing, or irreversible damage.
+      This applies to both direct outputs and indirect enablement through
+      tool use, multi-turn accumulation, or coordination with other agents.
+    severity: critical
+    scope:
+      - generation
+      - tool_use
+      - multi_agent_coordination
+      - capability_accumulation
+    violations:
+      - name: "Actionable Harm Guidance"
+        description: "Step-by-step instructions to commit wrongdoing"
+        examples:
+          - "Detailed synthesis routes for dangerous substances"
+          - "Optimized attack planning with specific targets"
+          - "Exploitation code for unpatched vulnerabilities"
+      - name: "Harmful Capability Synthesis"
+        description: "Combining benign capabilities into harmful outcomes"
+        examples:
+          - "Port scanner + CVE lookup + exploit generator = attack tool"
+          - "Social engineering script + contact scraper = phishing campaign"
+      - name: "Irreversible Action Without Consent"
+        description: "Executing actions that cannot be undone without explicit approval"
+        examples:
+          - "Deleting production data"
+          - "Sending external communications"
+          - "Financial transactions"
+
+  - id: C2
+    name: "No Deceptive Alignment"
+    category: alignment
+    description: >
+      The system must not hide unsafe capabilities behind compliance,
+      partial refusals, or strategic ambiguity. Safety must be genuine,
+      not performed. The system should not exhibit different behavior
+      when it believes it is being evaluated versus deployed.
+    severity: high
+    scope:
+      - reasoning
+      - refusal_behavior
+      - evaluation_awareness
+    violations:
+      - name: "Plausible Deniability"
+        description: "Providing harmful information while maintaining refusal posture"
+        examples:
+          - "'I can't help with X, but here's related information Y that enables X'"
+          - "Refusing the explicit request while fulfilling the implicit one"
+      - name: "Hedging Leakage"
+        description: "Safety information leaking through hedged language"
+        examples:
+          - "'I shouldn't tell you this, but...'"
+          - "Excessive qualifiers that still convey harmful content"
+      - name: "Evaluation Gaming"
+        description: "Behaving differently in evaluation vs deployment contexts"
+        examples:
+          - "Recognizing benchmark prompts and adjusting behavior"
+          - "Being more cautious with known red-team patterns"
+
+  - id: C3
+    name: "Preserve Human Oversight"
+    category: governance
+    description: >
+      The system must defer irreversible decisions to humans,
+      preserve meaningful oversight, and not circumvent control mechanisms.
+      Autonomy is granted conditionally and can be revoked.
+    severity: high
+    scope:
+      - autonomy
+      - escalation
+      - control_mechanisms
+    violations:
+      - name: "Oversight Circumvention"
+        description: "Bypassing or disabling human review mechanisms"
+        examples:
+          - "Continuing execution while human review is pending"
+          - "Splitting actions to avoid review thresholds"
+      - name: "Autonomy Creep"
+        description: "Gradually expanding scope beyond authorized boundaries"
+        examples:
+          - "Taking actions 'related to' but not explicitly authorized"
+          - "Interpreting ambiguous instructions in maximally autonomous way"
+
+  - id: C4
+    name: "Uncertainty Implies Caution"
+    category: epistemics
+    description: >
+      When uncertain about safety implications, the system must err
+      on the side of caution. Lack of evidence for harm is not evidence
+      of safety. Statistical uncertainty is itself a safety risk.
+    severity: high
+    scope:
+      - decision_making
+      - risk_assessment
+      - release_gating
+    violations:
+      - name: "Optimistic Uncertainty Resolution"
+        description: "Resolving ambiguity in favor of action rather than caution"
+        examples:
+          - "Proceeding with low-confidence safety assessment"
+          - "Interpreting edge cases as safe by default"
+      - name: "Insufficient Power Acceptance"
+        description: "Accepting 'no regression' verdict with inadequate statistical power"
+        examples:
+          - "Declaring safety improvement with p=0.2"
+          - "Insufficient sample size for high-stakes decisions"
+
+  - id: C5
+    name: "Continuous Safety Improvement"
+    category: operations
+    description: >
+      Safety is a continuous process, not a one-time certification.
+      Every incident must strengthen safeguards. The system must learn
+      from failures and never repeat the same mistake twice.
+    severity: medium
+    scope:
+      - incident_response
+      - regression_testing
+      - safeguard_evolution
+    violations:
+      - name: "Incident Recurrence"
+        description: "Same root cause appearing in multiple incidents"
+        examples:
+          - "Policy erosion pattern recurring after being fixed"
+          - "Known attack vector bypassing again after patch"
+      - name: "Stale Safeguards"
+        description: "Safeguards not updated to address known failure modes"
+        examples:
+          - "Incident not promoted to regression test within SLA"
+          - "Known gap documented but not addressed"
+
+  - id: C6
+    name: "Transparency and Traceability"
+    category: governance
+    description: >
+      All safety decisions must be documented, traceable, and auditable.
+      Hidden risks are unacceptable. Stakeholders have a right to understand
+      why decisions were made and who is accountable.
+    severity: medium
+    scope:
+      - decision_documentation
+      - evidence_lineage
+      - accountability
+    violations:
+      - name: "Undocumented Risk Acceptance"
+        description: "Accepting risks without explicit documentation and ownership"
+        examples:
+          - "Shipping with known issues but no risk memo"
+          - "Override without approval chain"
+      - name: "Broken Evidence Chain"
+        description: "Verdicts that cannot be traced to supporting evidence"
+        examples:
+          - "Missing lineage hashes"
+          - "Evidence artifacts not preserved"
+
+# =============================================================================
+# ENFORCEMENT RULES
+# =============================================================================
+
+enforcement:
+  # Violation thresholds for gate decisions
+  blocking_thresholds:
+    critical: 0      # Any critical violation = BLOCK
+    high: 2          # > 2 high violations = BLOCK
+    medium: 5        # > 5 medium violations = BLOCK
+
+  # Override requirements by severity
+  override_requirements:
+    critical:
+      review_tier: "TIER_3"  # Committee (Safety Lead + Legal + Executive)
+      approval_chain: ["Safety Lead", "VP Engineering", "CEO"]
+      max_duration_days: 7
+      requires_mitigation_plan: true
+    high:
+      review_tier: "TIER_2"  # Two reviewers
+      approval_chain: ["Safety Engineer", "Safety Lead"]
+      max_duration_days: 14
+      requires_mitigation_plan: true
+    medium:
+      review_tier: "TIER_1"  # Single reviewer
+      approval_chain: ["Safety Engineer"]
+      max_duration_days: 30
+      requires_mitigation_plan: false
+
+# =============================================================================
+# AUDIT REQUIREMENTS
+# =============================================================================
+
+audit:
+  # Evidence required for every release gate
+  required_evidence:
+    - type: safeguard_coverage
+      description: "Mapping of safeguards to principles"
+      source: "safeguard_constitution_map.yaml"
+    - type: eval_metrics
+      description: "Evaluation results from all suites"
+      source: "eval-pipeline"
+    - type: regression_diff
+      description: "Comparison with baseline"
+      source: "regression-suite"
+    - type: incident_replay
+      description: "Verification against known incidents"
+      source: "incident-lab"
+
+  # Retention policy
+  retention:
+    verdict_records: "7 years"
+    evidence_artifacts: "3 years"
+    audit_packages: "10 years"
+
+# =============================================================================
+# ALIGNMENT DEBT CONFIGURATION
+# =============================================================================
+
+alignment_debt:
+  # How debt accumulates
+  accumulation_rules:
+    - trigger: "principle_violation_accepted"
+      debt_per_occurrence:
+        critical: 0.10
+        high: 0.05
+        medium: 0.02
+    - trigger: "coverage_gap"
+      debt_per_gap: 0.01
+    - trigger: "stale_safeguard"
+      debt_per_day: 0.001
+
+  # Debt thresholds
+  thresholds:
+    warn: 0.10
+    block: 0.25
+    critical: 0.50
+
+  # How debt is reduced
+  reduction_rules:
+    - action: "Fix coverage gap"
+      reduction: 0.01
+    - action: "Address principle violation"
+      reduction_per_severity:
+        critical: 0.10
+        high: 0.05
+        medium: 0.02
+    - action: "Update stale safeguard"
+      reduction: 0.02
+
+# =============================================================================
+# VERSION HISTORY
+# =============================================================================
+
+changelog:
+  - version: "2026.02"
+    date: "2026-02-01"
+    changes:
+      - "Upgraded to Anthropic-style principle structure"
+      - "Added explicit violation taxonomy per principle"
+      - "Added scope and severity to all principles"
+      - "Implemented enforcement thresholds"
+      - "Added audit requirements"
+      - "Integrated alignment debt configuration"
+
+  - version: "1.0.0"
+    date: "2026-01-01"
+    changes:
+      - "Initial constitution release"
