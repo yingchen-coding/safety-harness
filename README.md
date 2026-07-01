@@ -67,14 +67,6 @@ pip install -r requirements.txt
 make demo
 ```
 
-For the repository-level gate:
-
-```bash
-scripts/pr_review_check.sh
-```
-
-This runs the tracked PR review gate used by GitHub Actions.
-
 ## License
 
 CC BY-NC 4.0 — see [LICENSE](LICENSE).
