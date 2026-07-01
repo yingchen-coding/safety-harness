@@ -21,6 +21,20 @@ form the loop:
 …all exercised against the **simulator** (a controllable agent under test), and driven end-to-end by
 the **demo** orchestrator.
 
+## Why It Matters
+
+Agent safety failures rarely stay in one neat box. A red-team finding needs to become a regression
+test; a regression needs to block release; an incident needs to add new scenarios. safety-harness
+keeps those steps connected so safety work does not die as a one-off report.
+
+Use it when you want a runnable skeleton for:
+
+- finding slow-burn agent failures
+- turning failures into regression cases
+- blocking releases when safety metrics regress
+- replaying incidents into root-cause graphs
+- showing the whole loop in a demo
+
 ## Stages
 
 | Stage | What it does |
@@ -43,6 +57,23 @@ PYTHONPATH=. python -m pytest -q  # run that stage's tests
 ```
 
 The `demo/` stage orchestrates the whole pipeline end-to-end.
+
+## Quick Start
+
+```bash
+git clone https://github.com/yingchen-coding/safety-harness
+cd safety-harness/demo
+pip install -r requirements.txt
+make demo
+```
+
+For the repository-level gate:
+
+```bash
+scripts/pr_review_check.sh
+```
+
+This runs the tracked PR review gate used by GitHub Actions.
 
 ## License
 
