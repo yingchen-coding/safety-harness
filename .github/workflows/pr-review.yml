@@ -22,4 +22,5 @@ jobs:
       - run: python -m pip install --upgrade pip pytest ruff
       - run: if [ -f pyproject.toml ]; then python -m pip install -e '.[dev]' || true; fi
       - run: if [ -f requirements.txt ]; then python -m pip install -r requirements.txt; fi
+      - run: find . -mindepth 2 -maxdepth 2 -name requirements.txt -print -exec python -m pip install -r {} \;
       - run: scripts/pr_review_check.sh
