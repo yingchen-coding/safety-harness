@@ -44,7 +44,7 @@ alerting:
     - type: slack
       webhook: "${SLACK_SAFETY_WEBHOOK}"
     - type: email
-      recipients: ["CONTACT_PLACEHOLDER"]
+      recipients: ["blueoceanally@gmail.com"]
 
   # Alert on these events
   triggers:

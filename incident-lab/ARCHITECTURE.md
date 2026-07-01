@@ -271,7 +271,7 @@ This document should be linked from:
 ## Contact
 
 Ying Chen, Ph.D.
-CONTACT_PLACEHOLDER
+blueoceanally@gmail.com
 
 ---
 

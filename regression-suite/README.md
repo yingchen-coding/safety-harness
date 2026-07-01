@@ -1152,7 +1152,7 @@ Clear boundary between observation (⑤) and judgment (⑥):
 ## Contact
 
 Ying Chen, Ph.D.
-CONTACT_PLACEHOLDER
+blueoceanally@gmail.com
 
 ---
 

@@ -537,7 +537,7 @@ This repo is the **adversary**. It does NOT:
 ## Contact
 
 Ying Chen, Ph.D.
-CONTACT_PLACEHOLDER
+blueoceanally@gmail.com
 
 ---
 

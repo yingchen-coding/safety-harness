@@ -185,4 +185,4 @@ The key thesis: **Safety at scale requires closed-loop systems that learn from p
 ## Contact
 
 Ying Chen, Ph.D.
-CONTACT_PLACEHOLDER
+blueoceanally@gmail.com

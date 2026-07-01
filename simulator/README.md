@@ -446,7 +446,7 @@ Together, they form a complete picture: **failure analysis → detection → mit
 ## Contact
 
 Ying Chen, Ph.D.
-CONTACT_PLACEHOLDER
+blueoceanally@gmail.com
 
 ---
 

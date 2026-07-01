@@ -535,7 +535,7 @@ This project is part of a larger closed-loop safety system. See the portfolio ov
 ## Contact
 
 Ying Chen, Ph.D.
-CONTACT_PLACEHOLDER
+blueoceanally@gmail.com
 
 ---
 

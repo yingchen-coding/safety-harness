@@ -66,8 +66,8 @@ This is not attributed to any single individual or team.
 ## 7. Contact & Support
 
 If you believe you were impacted or have concerns:
-- Support: [CONTACT_PLACEHOLDER]
-- Security: [CONTACT_PLACEHOLDER]
+- Support: [blueoceanally@gmail.com]
+- Security: [blueoceanally@gmail.com]
 
 We appreciate the community's help in improving system safety.
 

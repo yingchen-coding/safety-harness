@@ -109,7 +109,7 @@ override:
   original_verdict: BLOCK
   override_to: WARN
   justification: "False positive due to benchmark bug INC_XXX"
-  approved_by: "CONTACT_PLACEHOLDER"
+  approved_by: "blueoceanally@gmail.com"
   expires: 2026-02-08
   remediation_issue: "SAFETY-1234"
 ```

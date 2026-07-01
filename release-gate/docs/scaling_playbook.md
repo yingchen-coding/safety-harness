@@ -354,4 +354,4 @@ Estimated savings: 30-50% on compute costs.
 For questions about production deployment, contact:
 
 Ying Chen, Ph.D.
-CONTACT_PLACEHOLDER
+blueoceanally@gmail.com

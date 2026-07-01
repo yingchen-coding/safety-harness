@@ -98,4 +98,4 @@ See failure_escalation_policy.md for:
 
 ## Contact
 
-Constitution questions: CONTACT_PLACEHOLDER
+Constitution questions: blueoceanally@gmail.com
