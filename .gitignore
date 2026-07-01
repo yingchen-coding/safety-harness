@@ -9,3 +9,4 @@ dist/
 artifacts/
 *.ipynb_checkpoints/
 .DS_Store
+scripts/pr_review_check.sh
