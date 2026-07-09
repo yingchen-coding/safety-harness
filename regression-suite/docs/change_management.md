@@ -50,7 +50,7 @@ All changes are logged:
     "old_value": {"warn": 0.03, "block": 0.05},
     "new_value": {"warn": 0.04, "block": 0.06},
     "justification": "Historical data shows 3.5% natural variance",
-    "approvers": ["blueoceanally@gmail.com", "blueoceanally@gmail.com"],
+    "approvers": ["CONTACT_EMAIL", "CONTACT_EMAIL"],
     "ticket": "SAFE-1234"
 }
 ```

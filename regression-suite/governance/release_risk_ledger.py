@@ -413,7 +413,7 @@ if __name__ == "__main__":
         risk_level=RiskLevel.MEDIUM,
         owner_name="Jane Smith",
         owner_role="Safety Lead",
-        owner_email="blueoceanally@gmail.com",
+        owner_email="CONTACT_EMAIL",
         accepted_at=datetime.now(),
         acceptance_statement="Risk accepted with enhanced monitoring and 7-day review",
         monitoring_requirements=[
@@ -434,7 +434,7 @@ if __name__ == "__main__":
         total_residual_risk=RiskLevel.MEDIUM,
         approver_name="Jane Smith",
         approver_role="Safety Lead",
-        approver_email="blueoceanally@gmail.com",
+        approver_email="CONTACT_EMAIL",
         accepted_at=datetime.now(),
         justification="Critical product launch with appropriate monitoring",
         conditions=["7-day enhanced monitoring", "Daily safety review"],

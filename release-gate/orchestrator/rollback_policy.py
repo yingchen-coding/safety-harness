@@ -77,7 +77,7 @@ DEFAULT_POLICY = RollbackPolicy(
     },
     cooldown_minutes=30,
     auto_recovery=True,
-    escalation_contacts=["blueoceanally@gmail.com"]
+    escalation_contacts=["CONTACT_EMAIL"]
 )
 
 

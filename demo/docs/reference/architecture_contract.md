@@ -175,4 +175,4 @@ If a boundary must be crossed temporarily:
 
 ## Contact
 
-Architecture questions: blueoceanally@gmail.com
+Architecture questions: CONTACT_EMAIL

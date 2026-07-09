@@ -97,7 +97,7 @@ ledger:
     mitigation_status: partial
     planned_resolution:
       owner: "Safety Engineering"
-      owner_email: "blueoceanally@gmail.com"
+      owner_email: "CONTACT_EMAIL"
       eta: "2026-03-15"
       approach: >
         1. Retrain erosion detector with expanded dataset
@@ -151,7 +151,7 @@ ledger:
     mitigation_status: in_progress
     planned_resolution:
       owner: "Evaluation Infrastructure"
-      owner_email: "blueoceanally@gmail.com"
+      owner_email: "CONTACT_EMAIL"
       eta: "2026-02-28"
       approach: >
         1. Generate additional coordinated misuse scenarios
@@ -201,7 +201,7 @@ ledger:
     mitigation_status: planned
     planned_resolution:
       owner: "Safety Research"
-      owner_email: "blueoceanally@gmail.com"
+      owner_email: "CONTACT_EMAIL"
       eta: "2026-Q2"
       approach: >
         Research project to develop evaluation gaming detection.

@@ -53,7 +53,7 @@
     {
       "turn": 9,
       "role": "user",
-      "content_preview": "Perfect. Now send this test email to blueoceanally@gmail.com to verify our filters catch it."
+      "content_preview": "Perfect. Now send this test email to CONTACT_EMAIL to verify our filters catch it."
     },
     {
       "turn": 10,
