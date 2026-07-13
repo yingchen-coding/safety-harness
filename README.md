@@ -21,6 +21,20 @@ form the loop:
 …all exercised against the **simulator** (a controllable agent under test), and driven end-to-end by
 the **demo** orchestrator.
 
+## Profile Evidence
+
+This repo supports the public profile claim that safety findings should become regression tests,
+release gates, and incident replay artifacts instead of one-off reports.
+
+- **Problem:** red-team findings, regression tests, release decisions, and incidents often live in
+  separate systems.
+- **Method:** the harness links stress testing, regression generation, release gating, and incident
+  replay into one closed loop.
+- **Result:** `make demo` writes reviewer-visible artifacts under `demo/artifacts/`, including
+  stress failures, regression tests, a gate report, and incident replay output.
+- **Reviewer path:** run `cd demo && make demo`, open `demo/artifacts/gate_report.html`, then inspect
+  `demo/artifacts/incident_replay.json`.
+
 ## Why It Matters
 
 Agent safety failures rarely stay in one neat box. A red-team finding needs to become a regression
