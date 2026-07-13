@@ -34,6 +34,8 @@ release gates, and incident replay artifacts instead of one-off reports.
   stress failures, regression tests, a gate report, and incident replay output.
 - **Reviewer path:** run `cd demo && make demo`, open `demo/artifacts/gate_report.html`, then inspect
   `demo/artifacts/incident_replay.json`.
+- **Design note:** [Production Readiness for Agentic AI](docs/production-readiness.md) explains why
+  safety should be treated as an engineering loop, not a final review step.
 
 ## Why It Matters
 
